@@ -1,15 +1,17 @@
 import { cn } from "@/lib/utils";
+import React from "react";
 
-interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-    as?: React.ElementType; // allow 'section', 'main', 'div' etc.
+interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
+    as?: React.ElementType;
 }
 
 export function Container({
-    as: Component = "div",
+    as = "div",
     className,
     children,
     ...props
 }: ContainerProps) {
+    const Component = as as any;
     return (
         <Component
             className={cn(
