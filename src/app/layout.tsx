@@ -16,8 +16,43 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Stunley Opeña - Portfolio",
-  description: "Creative Designer & Developer",
+  title: "Stunley Opeña | Multimedia Designer & Developer",
+  description: "Explore the professional portfolio of Stunley Opeña, specializing in 3D CAD Design, UI/UX, and Brand Identity. Bringing creative visions to life with precision and innovation.",
+  keywords: ["Stunley Opeña", "Multimedia Designer", "3D CAD", "UI/UX Designer", "Portfolio", "Brand Identity", "Creative Developer"],
+  authors: [{ name: "Stunley Opeña" }],
+  creator: "Stunley Opeña",
+  publisher: "Stunley Opeña",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Stunley Opeña | Multimedia Designer & Developer",
+    description: "Explore the professional portfolio of Stunley Opeña, specializing in 3D CAD Design, UI/UX, and Brand Identity.",
+    url: "https://stundesign-portfolio.vercel.app",
+    siteName: "Stunley Opeña Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Stunley Opeña Portfolio Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stunley Opeña | Multimedia Designer & Developer",
+    description: "Explore the professional portfolio of Stunley Opeña, specializing in 3D CAD Design, UI/UX, and Brand Identity.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
