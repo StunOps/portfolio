@@ -133,11 +133,11 @@ export function TechStack() {
 
                     <motion.div
                         ref={containerRef}
-                        style={{ x: xPercent }}
+                        style={{ x: xPercent, touchAction: "pan-y" }}
                         onPan={handlePan}
                         onPanStart={() => setIsDragging(true)}
                         onPanEnd={() => setIsDragging(false)}
-                        className="flex gap-6 w-max cursor-grab active:cursor-grabbing pl-20"
+                        className="flex gap-6 w-max cursor-grab active:cursor-grabbing pl-20 py-4"
                     >
                         {marqueeTools.map((tool, index) => (
                             <div

@@ -57,7 +57,7 @@ const smmData: SMMProject[] = [
         name: "DEE-UMTC",
         description: "A Department of Engineering Education Organization.",
         dateRange: "August 2025 - January 2026",
-        ads: "No",
+        ads: "None",
         status: "Active",
         skills: [
             { name: "Strategy Development", level: 90 },
@@ -86,6 +86,7 @@ const smmData: SMMProject[] = [
         name: "Code&Craft",
         description: "A creative coding and design company.",
         dateRange: "August 2024 - January 2025",
+        ads: "None",
         status: "Active",
         skills: [
             { name: "Strategy Development", level: 50 },
@@ -119,6 +120,7 @@ const smmData: SMMProject[] = [
         name: "Etch Bros",
         description: "Specialized laser etching and personalization services.",
         dateRange: "January 2024 - January 2025",
+        ads: "None",
         status: "Inactive",
         skills: [
             { name: "Strategy Development", level: 80 },

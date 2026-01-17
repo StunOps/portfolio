@@ -2,8 +2,9 @@
 
 import { Canvas } from "@react-three/fiber"
 import Image from "next/image"
+import { motion, useInView } from "framer-motion"
 import { Center, OrbitControls, useGLTF, Resize } from "@react-three/drei"
-import { Suspense, useState, useEffect } from "react"
+import { Suspense, useState, useEffect, useRef } from "react"
 import { Loader, Images, Maximize2 } from "lucide-react"
 import { ProjectModal } from "@/components/ui/ProjectModal"
 
@@ -126,12 +127,66 @@ function Model({ path }: { path: string }) {
     )
 }
 
+function LazyModel({ project, isReady }: { project: ProjectData, isReady: boolean }) {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const isInView = useInView(containerRef, { once: false, amount: 0.1 })
+
+    return (
+        <div ref={containerRef} className="mx-auto w-[92%] md:w-full h-[400px] md:h-[600px] bg-black/20 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 overflow-hidden relative group">
+            {!isReady || !isInView ? (
+                <div className="absolute inset-0 flex items-center justify-center text-white">
+                    <div className="flex flex-col items-center gap-3">
+                        <Loader className="w-10 h-10 animate-spin text-primary opacity-20" />
+                        <p className="text-sm text-muted-foreground font-medium opacity-50">
+                            {!isInView ? "Scroll to View 3D" : "Initializing 3D Engine..."}
+                        </p>
+                    </div>
+                </div>
+            ) : (
+                <Suspense fallback={
+                    <div className="absolute inset-0 flex items-center justify-center text-white">
+                        <div className="flex flex-col items-center gap-3">
+                            <Loader className="w-10 h-10 animate-spin text-primary" />
+                            <p className="text-sm text-muted-foreground font-medium">Loading Model...</p>
+                        </div>
+                    </div>
+                }>
+                    <Canvas shadows dpr={[1, 1.5]} camera={{ fov: 45, position: [4, 4, 4] }}>
+                        <color attach="background" args={['#1a1a1a']} />
+                        <ambientLight intensity={0.5} />
+                        <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
+                        <pointLight position={[-10, -10, -10]} intensity={0.5} />
+                        <Model path={project.path} />
+                        <OrbitControls makeDefault autoRotate autoRotateSpeed={0.5} minDistance={2} maxDistance={10} enableZoom={true} />
+                    </Canvas>
+                </Suspense>
+            )}
+
+            {/* Overlay Badges */}
+            <div className="absolute top-6 right-6 flex flex-col gap-2 pointer-events-none">
+                <div className="px-4 py-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-xs text-white/70 font-mono text-center">
+                    .GLB
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10" title="Designed in Fusion 360">
+                    <Image
+                        src={project.path.substring(0, project.path.lastIndexOf('/')) + '/Fusion.png'}
+                        alt="Fusion 360"
+                        width={24}
+                        height={24}
+                        className="object-contain opacity-90"
+                    />
+                    <span className="text-xs text-white/70 font-mono">Fusion 360</span>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export function ThreeDDesigner() {
     const [isReady, setIsReady] = useState(false)
     const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
 
     useEffect(() => {
-        // Small delay to ensure container size is stable before first render
         const timer = setTimeout(() => {
             setIsReady(true)
         }, 500)
@@ -163,56 +218,7 @@ export function ThreeDDesigner() {
                                 </p>
                             </div>
 
-                            {/* 3D Canvas */}
-                            <div className="w-full h-[500px] md:h-[600px] bg-black/20 rounded-[2.5rem] border border-white/10 overflow-hidden relative group">
-                                {!isReady ? (
-                                    <div className="absolute inset-0 flex items-center justify-center text-white">
-                                        <div className="flex flex-col items-center gap-3">
-                                            <Loader className="w-10 h-10 animate-spin text-primary" />
-                                            <p className="text-sm text-muted-foreground font-medium">Initializing 3D Engine...</p>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <Suspense fallback={
-                                        <div className="absolute inset-0 flex items-center justify-center text-white">
-                                            <div className="flex flex-col items-center gap-3">
-                                                <Loader className="w-10 h-10 animate-spin text-primary" />
-                                                <p className="text-sm text-muted-foreground font-medium">Loading Model...</p>
-                                            </div>
-                                        </div>
-                                    }>
-                                        <Canvas shadows dpr={[1, 2]} camera={{ fov: 45, position: [4, 4, 4] }}>
-                                            <color attach="background" args={['#1a1a1a']} />
-
-                                            {/* Manual Lighting Setup - No environment map needed */}
-                                            <ambientLight intensity={0.5} />
-                                            <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-                                            <pointLight position={[-10, -10, -10]} intensity={0.5} />
-
-                                            <Model path={project.path} />
-
-                                            <OrbitControls makeDefault autoRotate autoRotateSpeed={0.5} minDistance={2} maxDistance={10} />
-                                        </Canvas>
-                                    </Suspense>
-                                )}
-
-                                {/* Overlay Badges */}
-                                <div className="absolute top-6 right-6 flex flex-col gap-2 pointer-events-none">
-                                    <div className="px-4 py-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-xs text-white/70 font-mono text-center">
-                                        .GLB
-                                    </div>
-                                    <div className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10" title="Designed in Fusion 360">
-                                        <Image
-                                            src={project.path.substring(0, project.path.lastIndexOf('/')) + '/Fusion.png'}
-                                            alt="Fusion 360"
-                                            width={24}
-                                            height={24}
-                                            className="object-contain opacity-90"
-                                        />
-                                        <span className="text-xs text-white/70 font-mono">Fusion 360</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <LazyModel project={project} isReady={isReady} />
 
                             {/* Gallery Button */}
                             <button

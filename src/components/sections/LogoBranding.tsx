@@ -12,7 +12,7 @@ const logoProjects = [
     { name: "CFIC", folder: "1CFIC", description: "Caraga Fincorp Identity" },
     { name: "RIC", folder: "2RIC", description: "UMTC Organization" },
     { name: "AYE Leader", folder: "3AYE Leader", description: "Youth leadership program branding" },
-    { name: "4Madayaw", folder: "4Madayaw", description: "Cultural festival identity system" },
+    { name: "Madayaw", folder: "4Madayaw", description: "Villas and Cafe Resort" },
     { name: "ADS", folder: "ADS", description: "Digital solutions agency logo" },
     { name: "ADS Swim Team", folder: "ADS Swim Team", description: "Sports team mascot and identity" },
     { name: "ASEAN Foundation", folder: "ASEAN Foundation", description: "International organization branding" },

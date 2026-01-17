@@ -80,16 +80,33 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                         <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5 backdrop-blur-md">
                             <div className="flex flex-col gap-1">
                                 <h2 className="text-2xl md:text-3xl font-bold text-white">{project.title}</h2>
-                                <div className="flex items-center gap-4">
-                                    <p className="text-muted-foreground">{project.subtitle}</p>
-                                    <div className="h-4 w-[1px] bg-white/20" />
-                                    <div className="flex gap-2">
-                                        {project.tools.map((tool) => (
-                                            <div key={tool.name} className="relative w-5 h-5 hover:scale-110 transition-transform" title={tool.name}>
-                                                <Image src={tool.icon} alt={tool.name} fill className="object-contain" />
-                                            </div>
-                                        ))}
+                                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                                    <div className="flex items-center gap-4">
+                                        <p className="text-muted-foreground">{project.subtitle}</p>
+                                        <div className="hidden md:block h-4 w-[1px] bg-white/20" />
+                                        <div className="flex gap-2">
+                                            {project.tools.map((tool) => (
+                                                <div key={tool.name} className="relative w-5 h-5 hover:scale-110 transition-transform" title={tool.name}>
+                                                    <Image src={tool.icon} alt={tool.name} fill className="object-contain" />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
+
+                                    {/* Figma Button for Mobile */}
+                                    {project.figmaLink && (
+                                        <div className="md:hidden">
+                                            <a
+                                                href={project.figmaLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/20 rounded-full text-xs font-medium text-primary transition-colors"
+                                            >
+                                                <Image src="/images/Projects/UI/1Madayaw Bus Tap Admin/tools/Figma.png" alt="Figma" width={14} height={14} className="object-contain" />
+                                                <span>Open in Figma</span>
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
@@ -99,11 +116,11 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                                         href={project.figmaLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 p-2 md:px-4 md:py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium text-white transition-colors"
+                                        className="hidden md:flex items-center gap-2 p-2 md:px-4 md:py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium text-white transition-colors"
                                         title="Open in Figma"
                                     >
                                         <Image src="/images/Projects/UI/1Madayaw Bus Tap Admin/tools/Figma.png" alt="Figma" width={16} height={16} className="object-contain" />
-                                        <span className="hidden md:inline">Open in Figma</span>
+                                        <span>Open in Figma</span>
                                     </a>
                                 )}
                                 <button

@@ -65,7 +65,7 @@ export function ChatWidget() {
             const assistantMsg: ChatMessage = {
                 id: (Date.now() + 1).toString(),
                 role: "assistant",
-                content: "Stun is currently working on this to help you more efficiently. Please wait a moment. 🦊",
+                content: "Stun is currently working on this AI to help you more efficiently. Please wait a moment. 🦊",
                 createdAt: new Date(),
             };
             setMessages((prev) => [...prev, assistantMsg]);
