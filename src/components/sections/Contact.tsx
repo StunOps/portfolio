@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import { Textarea } from "@/components/ui/Textarea"
-import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, ArrowRight, Send, Loader2, CheckCircle2 } from "lucide-react"
+import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, ArrowRight, Send, Loader2, CheckCircle2, Briefcase } from "lucide-react"
 
 export function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -111,6 +111,24 @@ export function Contact() {
                                             <div>
                                                 <h4 className="font-semibold text-white">Whatsapp</h4>
                                                 <p className="text-muted-foreground">09924456533</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Current Company */}
+                                        <div className="flex items-start gap-4">
+                                            <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-primary">
+                                                <Briefcase className="w-5 h-5" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-semibold text-white">Current Company</h4>
+                                                <a
+                                                    href="https://www.facebook.com/profile.php?id=61577838842721"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-muted-foreground hover:text-primary transition-colors"
+                                                >
+                                                    Code&Craft
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
