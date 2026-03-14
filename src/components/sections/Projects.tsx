@@ -16,7 +16,7 @@ const categories = [
     "UI/UX Designer",
     "Graphic Designer",
     "Social Media Manager",
-    "Front-end Developer",
+    "Developer",
     "3D CAD Designer"
 ]
 
@@ -228,6 +228,217 @@ const uiUxProjects = [
                 ]
             }
         ]
+    },
+    {
+        id: "ui-3",
+        number: "03",
+        title: "Rent Moto",
+        subtitle: "Motorcycle Rental Platform",
+        figmaLink: "https://www.figma.com/design/VJyYsrjd7s771lLvFooZVW/Rent-Moto?node-id=0-1&t=VjTn5xBltrihqbRj-1",
+        image: "/images/Projects/UI/3Rent Moto/Overview.jpg",
+        tools: [
+            { name: "Figma", icon: "/images/Projects/UI/3Rent Moto/tools/Figma.png" },
+            { name: "Photoshop", icon: "/images/Projects/UI/3Rent Moto/tools/Photoshop.png" },
+            { name: "Illustrator", icon: "/images/Projects/UI/3Rent Moto/tools/Illustrator.png" },
+        ],
+        gallery: [
+            {
+                name: "Authentication",
+                images: [
+                    { name: "Login Admin.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Login Admin.png" },
+                    { name: "Login Borrower.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Login Borrower.png" },
+                    { name: "Signup Borrower.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Signup Borrower.png" }
+                ]
+            },
+            {
+                name: "Borrower Home",
+                images: [
+                    { name: "Home.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Home.png" },
+                    { name: "Home Book.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Home Book.png" },
+                    { name: "Home Click Card.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Home Click Card.png" },
+                    { name: "Home Invalid.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Home Invalid.png" },
+                    { name: "Home Success.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Home Success.png" }
+                ]
+            },
+            {
+                name: "Borrower Messages",
+                images: [
+                    { name: "Home Click Message.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Home Click Message.png" },
+                    { name: "Messages Direct.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Messages Direct.png" }
+                ]
+            },
+            {
+                name: "Borrower Bookings",
+                images: [
+                    { name: "Bookings Pending.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Bookings Pending.png" },
+                    { name: "Bookings Ongoing.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Bookings Ongoing.png" },
+                    { name: "Bookings Declined.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Bookings Declined.png" },
+                    { name: "Bookings Empty.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Bookings Empty.png" }
+                ]
+            },
+            {
+                name: "Borrower Notifications",
+                images: [
+                    { name: "Notifications.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Notifications.png" },
+                    { name: "Notifications Transaction Done.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Notifications Transaction Done.png" },
+                    { name: "Notifications Rate Ride.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Notifications Rate Ride.png" }
+                ]
+            },
+            {
+                name: "Borrower Profile",
+                images: [
+                    { name: "Profile.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Profile.png" },
+                    { name: "Profile Drivers License.png", path: "/images/Projects/UI/3Rent Moto/images/1Borrower/Profile Drivers License.png" }
+                ]
+            },
+            {
+                name: "Admin Dashboard",
+                images: [
+                    { name: "Dashboard.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Dashboard.png" }
+                ]
+            },
+            {
+                name: "Admin Borrower Management",
+                images: [
+                    { name: "Borrowers - Accout Verification.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Borrowers - Accout Verification.png" },
+                    { name: "Borrowers - Accout Verification-1.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Borrowers - Accout Verification-1.png" },
+                    { name: "Borrowers - Borrower Information.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Borrowers - Borrower Information.png" }
+                ]
+            },
+            {
+                name: "Admin Motorcycle Management",
+                images: [
+                    { name: "Motorcycle.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Motorcycle.png" },
+                    { name: "Motorcycle Add.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Motorcycle Add.png" },
+                    { name: "Motorcycle Edit.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Motorcycle Edit.png" }
+                ]
+            },
+            {
+                name: "Admin Rental Logs",
+                images: [
+                    { name: "Rental Logs.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Rental Logs.png" },
+                    { name: "Rental Logs-1.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Rental Logs-1.png" },
+                    { name: "Rental Logs - Mark as Paid.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Rental Logs - Mark as Paid.png" }
+                ]
+            },
+            {
+                name: "Admin Reports",
+                images: [
+                    { name: "Summary Reports.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Summary Reports.png" },
+                    { name: "Summary Reports-1.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Summary Reports-1.png" },
+                    { name: "Summary Reports-2.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/Summary Reports-2.png" }
+                ]
+            },
+            {
+                name: "Admin Messages",
+                images: [
+                    { name: "MEssage.png", path: "/images/Projects/UI/3Rent Moto/images/2Admin/MEssage.png" }
+                ]
+            }
+        ]
+    },
+    {
+        id: "ui-4",
+        number: "04",
+        title: "GENZPEND",
+        subtitle: "Financial Literacy App",
+        figmaLink: "https://www.figma.com/design/SLk7GdSCXhig54b7g5Dgvh/GENZPEND?node-id=0-1&t=Ts6FjjNgFzaoghp1-1",
+        image: "/images/Projects/UI/4GenzPend/Overview.jpg",
+        tools: [
+            { name: "Figma", icon: "/images/Projects/UI/4GenzPend/tools/Figma.png" },
+            { name: "Photoshop", icon: "/images/Projects/UI/4GenzPend/tools/Photoshop.png" },
+            { name: "Illustrator", icon: "/images/Projects/UI/4GenzPend/tools/Illustrator.png" },
+        ],
+        gallery: [
+            {
+                name: "Starting Page",
+                images: [
+                    { name: "Starting Page.png", path: "/images/Projects/UI/4GenzPend/1Starting page/Starting Page.png" }
+                ]
+            },
+            {
+                name: "Login Page",
+                images: [
+                    { name: "Starting Page-1.png", path: "/images/Projects/UI/4GenzPend/2Login page/Starting Page-1.png" },
+                    { name: "Starting Page-2.png", path: "/images/Projects/UI/4GenzPend/2Login page/Starting Page-2.png" }
+                ]
+            },
+            {
+                name: "Home",
+                images: [
+                    { name: "Home-2.png", path: "/images/Projects/UI/4GenzPend/3Home/Home-2.png" },
+                    { name: "Home Below.png", path: "/images/Projects/UI/4GenzPend/3Home/Home Below.png" }
+                ]
+            },
+            {
+                name: "Learn",
+                images: [
+                    { name: "Learn.png", path: "/images/Projects/UI/4GenzPend/4Learn/Learn.png" },
+                    { name: "LEARN_ Start Learning.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning.png" },
+                    { name: "LEARN_ Start Learning-1.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-1.png" },
+                    { name: "LEARN_ Start Learning-2.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-2.png" },
+                    { name: "LEARN_ Start Learning-3.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-3.png" },
+                    { name: "LEARN_ Start Learning-4.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-4.png" },
+                    { name: "LEARN_ Start Learning-5.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-5.png" },
+                    { name: "LEARN_ Start Learning-6.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-6.png" },
+                    { name: "LEARN_ Start Learning-7.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-7.png" },
+                    { name: "LEARN_ Start Learning-8.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-8.png" },
+                    { name: "LEARN_ Start Learning-9.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-9.png" },
+                    { name: "LEARN_ Start Learning-10.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-10.png" },
+                    { name: "LEARN_ Start Learning-11.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-11.png" },
+                    { name: "LEARN_ Start Learning-12.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-12.png" },
+                    { name: "LEARN_ Start Learning-13.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-13.png" },
+                    { name: "LEARN_ Start Learning-14.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-14.png" },
+                    { name: "LEARN_ Start Learning-15.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-15.png" },
+                    { name: "LEARN_ Start Learning-16.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-16.png" },
+                    { name: "LEARN_ Start Learning-17.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-17.png" },
+                    { name: "LEARN_ Start Learning-18.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-18.png" },
+                    { name: "LEARN_ Start Learning-19.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-19.png" },
+                    { name: "LEARN_ Start Learning-20.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-20.png" },
+                    { name: "LEARN_ Start Learning-21.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-21.png" },
+                    { name: "LEARN_ Start Learning-22.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Start Learning-22.png" },
+                    { name: "LEARN_ Ive Read and Unserstand.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Ive Read and Unserstand.png" },
+                    { name: "LEARN_ Ive Read and Unserstand-1.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Ive Read and Unserstand-1.png" },
+                    { name: "LEARN_ Ive Read and Unserstand-2.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Ive Read and Unserstand-2.png" },
+                    { name: "LEARN_ Ive Read and Unserstand-3.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Ive Read and Unserstand-3.png" },
+                    { name: "LEARN_ Ive Read and Unserstand-4.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Ive Read and Unserstand-4.png" },
+                    { name: "LEARN_ Ive Read and Unserstand-5.png", path: "/images/Projects/UI/4GenzPend/4Learn/LEARN_ Ive Read and Unserstand-5.png" }
+                ]
+            },
+            {
+                name: "Track",
+                images: [
+                    { name: "Home-1.png", path: "/images/Projects/UI/4GenzPend/5Track/Home-1.png" },
+                    { name: "TRACK.png", path: "/images/Projects/UI/4GenzPend/5Track/TRACK.png" },
+                    { name: "TRACK-1.png", path: "/images/Projects/UI/4GenzPend/5Track/TRACK-1.png" },
+                    { name: "TRACK-2.png", path: "/images/Projects/UI/4GenzPend/5Track/TRACK-2.png" },
+                    { name: "TRACK-3.png", path: "/images/Projects/UI/4GenzPend/5Track/TRACK-3.png" },
+                    { name: "TRACK-4.png", path: "/images/Projects/UI/4GenzPend/5Track/TRACK-4.png" }
+                ]
+            },
+            {
+                name: "Quest",
+                images: [
+                    { name: "QUEST.png", path: "/images/Projects/UI/4GenzPend/6Quest/QUEST.png" },
+                    { name: "QUEST-1.png", path: "/images/Projects/UI/4GenzPend/6Quest/QUEST-1.png" }
+                ]
+            },
+            {
+                name: "Resources",
+                images: [
+                    { name: "Home-3.png", path: "/images/Projects/UI/4GenzPend/7Resources/Home-3.png" }
+                ]
+            },
+            {
+                name: "Profile",
+                images: [
+                    { name: "Home-4.png", path: "/images/Projects/UI/4GenzPend/8Profile/Home-4.png" },
+                    { name: "Home-5.png", path: "/images/Projects/UI/4GenzPend/8Profile/Home-5.png" },
+                    { name: "Home-6.png", path: "/images/Projects/UI/4GenzPend/8Profile/Home-6.png" },
+                    { name: "Home-7.png", path: "/images/Projects/UI/4GenzPend/8Profile/Home-7.png" }
+                ]
+            }
+        ]
     }
 ]
 
@@ -384,7 +595,7 @@ export function Projects() {
                 case "#ui-ux": setActiveCategory("UI/UX Designer"); break;
                 case "#graphic-artist": setActiveCategory("Graphic Designer"); break;
                 case "#social-media": setActiveCategory("Social Media Manager"); break;
-                case "#frontend": setActiveCategory("Front-end Developer"); break;
+                case "#frontend": setActiveCategory("Developer"); break;
                 case "#3d-cad": setActiveCategory("3D CAD Designer"); break;
             }
         }
@@ -458,7 +669,7 @@ export function Projects() {
                                             {category === "UI/UX Designer" ? "UI/UX" :
                                                 category === "Graphic Designer" ? "Graphics" :
                                                     category === "Social Media Manager" ? "Socials" :
-                                                        category === "Front-end Developer" ? "Front Dev" :
+                                                        category === "Developer" ? "Dev" :
                                                             "3D CAD"}
                                         </span>
                                         <span className="hidden md:inline">{category}</span>
@@ -495,7 +706,7 @@ export function Projects() {
                                     </div>
                                 ) : activeCategory === "Social Media Manager" ? (
                                     <SocialMediaManager />
-                                ) : activeCategory === "Front-end Developer" ? (
+                                ) : activeCategory === "Developer" ? (
                                     <FrontendDeveloper />
                                 ) : activeCategory === "3D CAD Designer" ? (
                                     <ThreeDDesigner />

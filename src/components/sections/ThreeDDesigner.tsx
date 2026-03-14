@@ -5,7 +5,7 @@ import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 import { Center, OrbitControls, useGLTF, Resize } from "@react-three/drei"
 import { Suspense, useState, useEffect, useRef } from "react"
-import { Loader, Images, Maximize2 } from "lucide-react"
+import { Loader, Images, Maximize2, ChevronDown, ChevronUp } from "lucide-react"
 import { ProjectModal } from "@/components/ui/ProjectModal"
 
 // Define the structure for the modal
@@ -185,6 +185,7 @@ function LazyModel({ project, isReady }: { project: ProjectData, isReady: boolea
 export function ThreeDDesigner() {
     const [isReady, setIsReady] = useState(false)
     const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
+    const [visibleCount, setVisibleCount] = useState(3)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -192,6 +193,9 @@ export function ThreeDDesigner() {
         }, 500)
         return () => clearTimeout(timer)
     }, [])
+
+    const visibleProjects = threeDProjects.slice(0, visibleCount)
+    const hiddenCount = threeDProjects.length - visibleCount
 
     return (
         <>
@@ -203,7 +207,7 @@ export function ThreeDDesigner() {
                 </div>
 
                 <div className="flex flex-col gap-24">
-                    {threeDProjects.map((project, index) => (
+                    {visibleProjects.map((project, index) => (
                         <div key={project.id} className="flex flex-col gap-6">
                             {/* Title Row */}
                             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 px-4">
@@ -232,6 +236,30 @@ export function ThreeDDesigner() {
                         </div>
                     ))}
                 </div>
+
+                {/* Show More / Show Less */}
+                {hiddenCount > 0 && (
+                    <div className="flex justify-center pt-4">
+                        <button
+                            onClick={() => setVisibleCount(threeDProjects.length)}
+                            className="group flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+                        >
+                            <span className="text-sm font-medium">Show More ({hiddenCount} more)</span>
+                            <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+                        </button>
+                    </div>
+                )}
+                {visibleCount > 3 && (
+                    <div className="flex justify-center pt-4">
+                        <button
+                            onClick={() => setVisibleCount(3)}
+                            className="group flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
+                        >
+                            <span className="text-sm font-medium">Show Less</span>
+                            <ChevronUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* Gallery Modal */}

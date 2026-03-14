@@ -201,7 +201,7 @@ export function Navbar() {
                                         onClick={(e) => handleProjectCategoryClick(e, "#frontend")}
                                         className={cn("cursor-pointer hover:text-primary focus:text-primary", activeProjectCategory === "#frontend" && "text-primary font-bold")}
                                     >
-                                        Front-end Developer
+                                        Developer
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>

@@ -136,6 +136,38 @@ const frontendProjects = [
                 images: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg"].map(img => ({ name: img, path: `/images/Projects/Front-end Developer/4Coinnect/5Information Messages/${img}` }))
             }
         ]
+    },
+    {
+        id: "fe-5",
+        number: "05",
+        title: "SDaily Planner",
+        subtitle: "Personal Planner for Stun Design",
+        image: "/images/Projects/Front-end Developer/5SDaily Planner/Overview.jpg",
+        tools: [
+            { name: "Next.js", icon: "/images/Projects/Front-end Developer/5SDaily Planner/Icons/NextJS.png" },
+            { name: "Tailwind", icon: "/images/Projects/Front-end Developer/5SDaily Planner/Icons/Tailwind.png" },
+            { name: "VS Code", icon: "/images/Projects/Front-end Developer/5SDaily Planner/Icons/VSCode.png" },
+            { name: "Vercel", icon: "/images/Projects/Front-end Developer/5SDaily Planner/Icons/Vercel.png" },
+        ],
+        gallery: [
+            {
+                name: "Web App",
+                images: [
+                    { name: "Overview.png", path: "/images/Projects/Front-end Developer/5SDaily Planner/Web/Overview.png" },
+                    { name: "Planner.png", path: "/images/Projects/Front-end Developer/5SDaily Planner/Web/Planner.png" },
+                    { name: "Goals.png", path: "/images/Projects/Front-end Developer/5SDaily Planner/Web/Goals.png" },
+                    { name: "Cards.png", path: "/images/Projects/Front-end Developer/5SDaily Planner/Web/Cards.png" },
+                    { name: "Revenue.png", path: "/images/Projects/Front-end Developer/5SDaily Planner/Web/Revenue.png" }
+                ]
+            },
+            {
+                name: "Mobile App",
+                images: [
+                    { name: "Screenshot_2026-02-08-02-31-38-878_com.sdaily.planner_1770489136699edit.jpg", path: "/images/Projects/Front-end Developer/5SDaily Planner/Mobile/Screenshot_2026-02-08-02-31-38-878_com.sdaily.planner_1770489136699edit.jpg" },
+                    { name: "Screenshot_2026-02-08-02-31-43-784_com.sdaily.planner_1770489118711edit.jpg", path: "/images/Projects/Front-end Developer/5SDaily Planner/Mobile/Screenshot_2026-02-08-02-31-43-784_com.sdaily.planner_1770489118711edit.jpg" }
+                ]
+            }
+        ]
     }
 ]
 
