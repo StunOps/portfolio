@@ -51,7 +51,7 @@ const threeDProjects: ProjectData[] = [
         title: "Air Monitoring",
         category: "Environmental Monitoring",
         subtitle: "Enclosure & Sensor Design",
-        path: "/images/Projects/3D%20Design/Air%20Monitoring/ImageToStl.com_Air+Monitoring.gltf",
+        path: "/images/Projects/3D%20Design/Air%20Monitoring/Air-Monitoring.gltf",
         description: "IoT air quality monitoring device enclosure.",
         tools: [{ name: "Fusion 360", icon: "/images/Projects/3D%20Design/Agri-Scan/Fusion.png" }],
         gallery: []
@@ -137,7 +137,7 @@ const threeDProjects: ProjectData[] = [
         title: "Water Dispenser",
         category: "Automated System",
         subtitle: "Smart Dispensing Unit",
-        path: "/images/Projects/3D%20Design/Water%20Dispenser/ImageToStl.com_Water+Dispenser.gltf",
+        path: "/images/Projects/3D%20Design/Water%20Dispenser/Water-Dispenser.gltf",
         description: "Automated smart water dispensing mechanism.",
         tools: [{ name: "Fusion 360", icon: "/images/Projects/3D%20Design/Agri-Scan/Fusion.png" }],
         gallery: []
@@ -196,7 +196,7 @@ const threeDProjects: ProjectData[] = [
         title: "Cloud Monitoring",
         category: "IoT Enclosure",
         subtitle: "Cloud Connected Sensor Hub",
-        path: "/images/Projects/3D%20Design/Cloud%20Monitoring/ImageToStl.com_Cloud+Monitoring.gltf",
+        path: "/images/Projects/3D%20Design/Cloud%20Monitoring/Cloud-Monitoring.gltf",
         description: "Compact cloud data telemetry & environmental sensor hub.",
         tools: [{ name: "Fusion 360", icon: "/images/Projects/3D%20Design/Agri-Scan/Fusion.png" }],
         gallery: []
@@ -206,7 +206,7 @@ const threeDProjects: ProjectData[] = [
         title: "IT Heartbeat",
         category: "Server & IT Hardware",
         subtitle: "Server Status Monitor Unit",
-        path: "/images/Projects/3D%20Design/IT%20Heartbeat/ImageToStl.com_IT+HearbeatV3.gltf",
+        path: "/images/Projects/3D%20Design/IT%20Heartbeat/IT-Heartbeat.gltf",
         description: "Hardware telemetry monitor unit for server racks.",
         tools: [{ name: "Fusion 360", icon: "/images/Projects/3D%20Design/Agri-Scan/Fusion.png" }],
         gallery: []
@@ -216,7 +216,7 @@ const threeDProjects: ProjectData[] = [
         title: "Pill Dispenser",
         category: "Medical Automation",
         subtitle: "Automated Medication Manager",
-        path: "/images/Projects/3D%20Design/Pill%20Dispenser/ImageToStl.com_Pill+Dispenser.gltf",
+        path: "/images/Projects/3D%20Design/Pill%20Dispenser/Pill-Dispenser.gltf",
         description: "Smart timed pill dispensing mechanism.",
         tools: [{ name: "Fusion 360", icon: "/images/Projects/3D%20Design/Agri-Scan/Fusion.png" }],
         gallery: []
