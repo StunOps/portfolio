@@ -197,6 +197,15 @@ export function Navbar() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link
+                                        href="#automation"
+                                        onClick={(e) => handleProjectCategoryClick(e, "#automation")}
+                                        className={cn("cursor-pointer hover:text-primary focus:text-primary", activeProjectCategory === "#automation" && "text-primary font-bold")}
+                                    >
+                                        Automation
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link
                                         href="#frontend"
                                         onClick={(e) => handleProjectCategoryClick(e, "#frontend")}
                                         className={cn("cursor-pointer hover:text-primary focus:text-primary", activeProjectCategory === "#frontend" && "text-primary font-bold")}

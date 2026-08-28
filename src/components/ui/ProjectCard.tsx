@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Clock } from "lucide-react"
 
 interface ProjectCardProps {
     number: string
@@ -12,15 +12,17 @@ interface ProjectCardProps {
     tools: { name: string; icon: string }[]
     image: string
     href?: string
+    hoverText?: string
+    isOngoing?: boolean
 }
 
-export function ProjectCard({ number, title, subtitle, tools, image, href = "#" }: ProjectCardProps) {
+export function ProjectCard({ number, title, subtitle, tools, image, hoverText, isOngoing }: ProjectCardProps) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="group relative flex flex-col gap-6 p-6 rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-sm hover:border-primary/30 transition-colors duration-300"
+            className="group relative flex flex-col gap-6 p-6 rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-sm hover:border-primary/30 transition-colors duration-300 h-full"
         >
             {/* Header Section */}
             <div className="flex justify-between items-start gap-4">
@@ -31,10 +33,10 @@ export function ProjectCard({ number, title, subtitle, tools, image, href = "#" 
                     className="flex flex-col items-end text-right min-w-0 flex-1 overflow-hidden"
                     style={{ containerType: "inline-size" }}
                 >
-                    <h3 className="font-bold leading-tight whitespace-nowrap text-[clamp(0.8rem,8cqw,1.5rem)] text-white w-full">
+                    <h3 className="font-bold leading-tight whitespace-nowrap text-[clamp(0.8rem,8cqw,1.5rem)] text-white w-full truncate">
                         {title}
                     </h3>
-                    <p className="text-muted-foreground text-sm whitespace-nowrap">{subtitle}</p>
+                    <p className="text-muted-foreground text-sm whitespace-nowrap truncate">{subtitle}</p>
                     {/* Tools */}
                     <div className="flex gap-2 mt-2">
                         {tools.map((tool) => (
@@ -52,18 +54,36 @@ export function ProjectCard({ number, title, subtitle, tools, image, href = "#" 
             </div>
 
             {/* Image Section */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-black/20">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-black/20 mt-auto">
                 <Image
                     src={image}
                     alt={title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
+                {/* Optional Status Badge */}
+                {isOngoing && (
+                    <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-primary/90 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold flex items-center gap-1.5 shadow-lg z-10">
+                        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                        Project Ongoing
+                    </div>
+                )}
+
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:bg-primary/90">
-                        Explore <ArrowRight className="w-4 h-4 text-white" />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 text-center">
+                    <button className="flex items-center gap-2 px-6 py-3 rounded-full font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl bg-primary text-white hover:bg-primary/90">
+                        {isOngoing ? (
+                            <>
+                                <Clock className="w-4 h-4 text-white" />
+                                {hoverText || "Project Ongoing"}
+                            </>
+                        ) : (
+                            <>
+                                {hoverText || "Explore"} <ArrowRight className="w-4 h-4 text-white" />
+                            </>
+                        )}
                     </button>
                 </div>
             </div>

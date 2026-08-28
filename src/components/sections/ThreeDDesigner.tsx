@@ -23,93 +23,193 @@ interface ProjectData {
 const threeDProjects: ProjectData[] = [
     {
         id: "3d-1",
-        title: "Agri-Scan",
-        category: "Prototype Design",
-        subtitle: "Prototype Design",
-        path: "/images/Projects/3D%20Design/Agri-Scan/Agri-Scan.gltf",
-        description: "Advanced agricultural scanning device prototype.",
-        tools: [],
-        gallery: [
-            {
-                name: "Renderings",
-                images: [
-                    { name: "View 1", path: "/images/Projects/3D%20Design/Agri-Scan/Images/1.png" },
-                    { name: "View 2", path: "/images/Projects/3D%20Design/Agri-Scan/Images/2.png" },
-                    { name: "View 3", path: "/images/Projects/3D%20Design/Agri-Scan/Images/3.png" },
-                ]
-            }
-        ]
+        title: "Air Monitoring",
+        category: "Environmental Monitoring",
+        subtitle: "Enclosure & Sensor Design",
+        path: "/images/Projects/3D Design/Air Monitoring/ImageToStl.com_Air+Monitoring.gltf",
+        description: "IoT air quality monitoring device enclosure.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
     },
     {
         id: "3d-2",
-        title: "Bill Dispenser",
-        category: "Mechanical Engineering",
-        subtitle: "Mechanical Engineering",
-        path: "/images/Projects/3D%20Design/Bill%20Dispenser/Bill%20Dispenser.gltf",
-        description: "Automated bill dispensing mechanism.",
-        tools: [],
+        title: "TAOB",
+        category: "Product Design",
+        subtitle: "Product Design Concept",
+        path: "/images/Projects/3D Design/TAOB/TAOB.gltf",
+        description: "Ergonomic tactile interface device.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
         gallery: [
             {
                 name: "Renderings",
                 images: [
-                    { name: "View 1", path: "/images/Projects/3D%20Design/Bill%20Dispenser/Images/1.png" },
-                    { name: "View 2", path: "/images/Projects/3D%20Design/Bill%20Dispenser/Images/2.png" },
-                    { name: "View 3", path: "/images/Projects/3D%20Design/Bill%20Dispenser/Images/3.png" },
+                    { name: "View 1", path: "/images/Projects/3D Design/TAOB/Images/1.png" },
+                    { name: "View 2", path: "/images/Projects/3D Design/TAOB/Images/2.png" },
+                    { name: "View 3", path: "/images/Projects/3D Design/TAOB/Images/3.png" },
                 ]
             }
         ]
     },
     {
         id: "3d-3",
-        title: "Coin Sorter",
-        category: "Mechanical Engineering",
-        subtitle: "Mechanical Engineering",
-        path: "/images/Projects/3D%20Design/Coin%20Dispenser/Coin%20Dispenser.gltf",
-        description: "Precision coin sorting unit.",
-        tools: [],
-        gallery: [
-            {
-                name: "Renderings",
-                images: [
-                    { name: "View 1", path: "/images/Projects/3D%20Design/Coin%20Dispenser/Images/1.png" },
-                    { name: "View 2", path: "/images/Projects/3D%20Design/Coin%20Dispenser/Images/2.png" },
-                ]
-            }
-        ]
+        title: "Leaf Monitoring",
+        category: "Agricultural Tech",
+        subtitle: "Sensor Holder & Casing",
+        path: "/images/Projects/3D Design/Leaf Monitoring/Leaf Monitor Holder.gltf",
+        description: "Field-ready plant leaf monitoring holder.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
     },
     {
         id: "3d-4",
-        title: "TAOB",
-        category: "Product Design",
-        subtitle: "Product Design Concept",
-        path: "/images/Projects/3D%20Design/TAOB/TAOB.gltf",
-        description: "Ergonomic tactile interface device.",
-        tools: [],
+        title: "Agri-Scan",
+        category: "Prototype Design",
+        subtitle: "Prototype Design",
+        path: "/images/Projects/3D Design/Agri-Scan/Agri-Scan.gltf",
+        description: "Advanced agricultural scanning device prototype.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
         gallery: [
             {
                 name: "Renderings",
                 images: [
-                    { name: "View 1", path: "/images/Projects/3D%20Design/TAOB/Images/1.png" },
-                    { name: "View 2", path: "/images/Projects/3D%20Design/TAOB/Images/2.png" },
-                    { name: "View 3", path: "/images/Projects/3D%20Design/TAOB/Images/3.png" },
+                    { name: "View 1", path: "/images/Projects/3D Design/Agri-Scan/Images/1.png" },
+                    { name: "View 2", path: "/images/Projects/3D Design/Agri-Scan/Images/2.png" },
+                    { name: "View 3", path: "/images/Projects/3D Design/Agri-Scan/Images/3.png" },
                 ]
             }
         ]
     },
     {
         id: "3d-5",
-        title: "UV Holder",
-        category: "Mounting for Device",
-        subtitle: "Mounting for Device Design",
-        path: "/images/Projects/3D%20Design/UV%20Holder/UV%20Holder.gltf",
-        description: "Mounting bracket system.",
-        tools: [],
+        title: "Coin Sorter",
+        category: "Mechanical Engineering",
+        subtitle: "Mechanical Engineering",
+        path: "/images/Projects/3D Design/Coin Dispenser/Coin Dispenser.gltf",
+        description: "Precision coin sorting unit.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
         gallery: [
             {
                 name: "Renderings",
                 images: [
-                    { name: "View 1", path: "/images/Projects/3D%20Design/UV%20Holder/Images/1.png" },
-                    { name: "View 2", path: "/images/Projects/3D%20Design/UV%20Holder/Images/2.png" },
+                    { name: "View 1", path: "/images/Projects/3D Design/Coin Dispenser/Images/1.png" },
+                    { name: "View 2", path: "/images/Projects/3D Design/Coin Dispenser/Images/2.png" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "3d-6",
+        title: "Drone Monitoring",
+        category: "Enclosure Design",
+        subtitle: "Drone Monitor Mount & Enclosure",
+        path: "/images/Projects/3D Design/Drone Monitoring/Drone Monitor Holder.gltf",
+        description: "Custom drone monitoring system holder and casing.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-7",
+        title: "Water Dispenser",
+        category: "Automated System",
+        subtitle: "Smart Dispensing Unit",
+        path: "/images/Projects/3D Design/Water Dispenser/ImageToStl.com_Water+Dispenser.gltf",
+        description: "Automated smart water dispensing mechanism.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-8",
+        title: "Bill Dispenser",
+        category: "Mechanical Engineering",
+        subtitle: "Mechanical Engineering",
+        path: "/images/Projects/3D Design/Bill Dispenser/Bill Dispenser.gltf",
+        description: "Automated bill dispensing mechanism.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: [
+            {
+                name: "Renderings",
+                images: [
+                    { name: "View 1", path: "/images/Projects/3D Design/Bill Dispenser/Images/1.png" },
+                    { name: "View 2", path: "/images/Projects/3D Design/Bill Dispenser/Images/2.png" },
+                    { name: "View 3", path: "/images/Projects/3D Design/Bill Dispenser/Images/3.png" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "3d-9",
+        title: "Blind Monitoring",
+        category: "Assistive Technology",
+        subtitle: "Tactile Smart Device Casing",
+        path: "/images/Projects/3D Design/Blind Monitoring/Blind Monitoring.gltf",
+        description: "Wearable assistive device for visually impaired navigation.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-10",
+        title: "Bus Passenger Monitoring",
+        category: "Transit Analytics",
+        subtitle: "Passenger Counter Enclosure",
+        path: "/images/Projects/3D Design/Bus Passenger Monitoring/Bus Passenger Monitoring.gltf",
+        description: "Automated passenger counting & monitoring module.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-11",
+        title: "Cheat Monitoring",
+        category: "Proctoring Hardware",
+        subtitle: "Exam Monitoring Sensor Unit",
+        path: "/images/Projects/3D Design/Cheat Monitoring/Cheat Monitoring.gltf",
+        description: "Smart monitoring casing for automated exam proctoring.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-12",
+        title: "Cloud Monitoring",
+        category: "IoT Enclosure",
+        subtitle: "Cloud Connected Sensor Hub",
+        path: "/images/Projects/3D Design/Cloud Monitoring/ImageToStl.com_Cloud+Monitoring.gltf",
+        description: "Compact cloud data telemetry & environmental sensor hub.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-13",
+        title: "IT Heartbeat",
+        category: "Server & IT Hardware",
+        subtitle: "Server Status Monitor Unit",
+        path: "/images/Projects/3D Design/IT Heartbeat/ImageToStl.com_IT+HearbeatV3.gltf",
+        description: "Hardware telemetry monitor unit for server racks.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-14",
+        title: "Pill Dispenser",
+        category: "Medical Automation",
+        subtitle: "Automated Medication Manager",
+        path: "/images/Projects/3D Design/Pill Dispenser/ImageToStl.com_Pill+Dispenser.gltf",
+        description: "Smart timed pill dispensing mechanism.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: []
+    },
+    {
+        id: "3d-15",
+        title: "UV Holder",
+        category: "Mounting Device",
+        subtitle: "Mounting for Device Design",
+        path: "/images/Projects/3D Design/UV Holder/UV Holder.gltf",
+        description: "Precision UV light mounting bracket system.",
+        tools: [{ name: "Fusion 360", icon: "/images/Projects/3D Design/Agri-Scan/Fusion.png" }],
+        gallery: [
+            {
+                name: "Renderings",
+                images: [
+                    { name: "View 1", path: "/images/Projects/3D Design/UV Holder/Images/1.png" },
+                    { name: "View 2", path: "/images/Projects/3D Design/UV Holder/Images/2.png" },
                 ]
             }
         ]
@@ -169,7 +269,7 @@ function LazyModel({ project, isReady }: { project: ProjectData, isReady: boolea
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10" title="Designed in Fusion 360">
                     <Image
-                        src={project.path.substring(0, project.path.lastIndexOf('/')) + '/Fusion.png'}
+                        src="/images/Projects/3D Design/Agri-Scan/Fusion.png"
                         alt="Fusion 360"
                         width={24}
                         height={24}
@@ -225,13 +325,15 @@ export function ThreeDDesigner() {
                             <LazyModel project={project} isReady={isReady} />
 
                             {/* Gallery Button */}
-                            <button
-                                onClick={() => setSelectedProject(project)}
-                                className="w-fit mx-auto px-8 py-3 bg-primary text-white font-bold text-lg rounded-full hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2 group"
-                            >
-                                <Images className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                <span>View Render Gallery</span>
-                            </button>
+                            {project.gallery && project.gallery.length > 0 && project.gallery[0].images.length > 0 && (
+                                <button
+                                    onClick={() => setSelectedProject(project)}
+                                    className="w-fit mx-auto px-8 py-3 bg-primary text-white font-bold text-lg rounded-full hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2 group"
+                                >
+                                    <Images className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                    <span>View Render Gallery</span>
+                                </button>
+                            )}
 
                         </div>
                     ))}

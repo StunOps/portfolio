@@ -20,6 +20,14 @@ const tools: Tool[] = [
     { name: "Canva", description: "Content Creation", icon: "/images/About/Canva.png", category: "Design" },
     { name: "Lightroom", description: "Photo Enhancement", icon: "/images/About/Lightroom.png", category: "Design" },
 
+    // AI & Automation Tools
+    { name: "n8n", description: "AI Workflow", icon: "/images/About/n8n.png", category: "Development" },
+    { name: "Claude AI", description: "LLM Assistant", icon: "/images/About/Claude.png", category: "Engineering" },
+    { name: "Gemini AI", description: "LLM Model", icon: "/images/About/Gemini.png", category: "Engineering" },
+    { name: "Serper", description: "Google Search API", icon: "/images/About/Serper.png", category: "Engineering" },
+    { name: "Supabase", description: "Backend & Database", icon: "/images/About/Supabasse.png", category: "Development" },
+    { name: "HubSpot", description: "CRM & Automation", icon: "/images/About/Hubspot.png", category: "Development" },
+
     // Development & Productivity
     { name: "Qt", description: "Desktop UI", icon: "/images/About/QT.png", category: "Development" },
     { name: "NetBeans", description: "Java Dev", icon: "/images/About/Netbeans.png", category: "Development" },
@@ -98,7 +106,7 @@ export function TechStack() {
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.2 }}
                 exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.8 }}
             >

@@ -9,6 +9,7 @@ import { InstagramCarousel } from "@/components/ui/InstagramCarousel"
 import { LogoBranding } from "@/components/sections/LogoBranding"
 import { MerchDesigns } from "@/components/sections/MerchDesigns"
 import { SocialMediaManager } from "@/components/sections/SocialMediaManager"
+import { Automation } from "@/components/sections/Automation"
 import { FrontendDeveloper } from "@/components/sections/FrontendDeveloper"
 import { ThreeDDesigner } from "@/components/sections/ThreeDDesigner"
 
@@ -16,6 +17,7 @@ const categories = [
     "UI/UX Designer",
     "Graphic Designer",
     "Social Media Manager",
+    "Automation",
     "Developer",
     "3D CAD Designer"
 ]
@@ -439,6 +441,134 @@ const uiUxProjects = [
                 ]
             }
         ]
+    },
+    {
+        id: "ui-5",
+        number: "05",
+        title: "Skye Paddle",
+        subtitle: "Padel Booking & Management System",
+        figmaLink: "https://www.figma.com/design/KE8S36CyreMa6q2JIZwZ1J/UI-Design?node-id=669-18&t=gCYzRSHq6oCaxWQ7-1",
+        image: "/images/Projects/UI/5Skye Paddle/Overview.jpg",
+        tools: [
+            { name: "Figma", icon: "/images/Projects/UI/5Skye Paddle/tools/Figma.png" },
+            { name: "Photoshop", icon: "/images/Projects/UI/5Skye Paddle/tools/Photoshop.png" },
+            { name: "Illustrator", icon: "/images/Projects/UI/5Skye Paddle/tools/Illustrator.png" },
+        ],
+        gallery: [
+            // Customer Categories
+            {
+                userType: "Customer",
+                name: "1Starting page",
+                images: [
+                    { name: "Login Page-1.png", path: "/images/Projects/UI/5Skye Paddle/Customer/1Starting page/Login Page-1.png" }
+                ]
+            },
+            {
+                userType: "Customer",
+                name: "2Login page",
+                images: [
+                    { name: "Login Page.png", path: "/images/Projects/UI/5Skye Paddle/Customer/2Login page/Login Page.png" }
+                ]
+            },
+            {
+                userType: "Customer",
+                name: "3Book",
+                images: [
+                    { name: "Dashboard.png", path: "/images/Projects/UI/5Skye Paddle/Customer/3Book/Dashboard.png" },
+                    { name: "Cart.png", path: "/images/Projects/UI/5Skye Paddle/Customer/3Book/Cart.png" },
+                    { name: "Payment.png", path: "/images/Projects/UI/5Skye Paddle/Customer/3Book/Payment.png" },
+                    { name: "Confirmation.png", path: "/images/Projects/UI/5Skye Paddle/Customer/3Book/Confirmation.png" },
+                    { name: "Profile Guest.png", path: "/images/Projects/UI/5Skye Paddle/Customer/3Book/Profile Guest.png" }
+                ]
+            },
+            {
+                userType: "Customer",
+                name: "4OpenPlay",
+                images: [
+                    { name: "Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Customer/4OpenPlay/Open Play.png" },
+                    { name: "Open Play-1.png", path: "/images/Projects/UI/5Skye Paddle/Customer/4OpenPlay/Open Play-1.png" },
+                    { name: "Join Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Customer/4OpenPlay/Join Open Play.png" },
+                    { name: "Payment Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Customer/4OpenPlay/Payment Open Play.png" },
+                    { name: "Confirmation Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Customer/4OpenPlay/Confirmation Open Play.png" }
+                ]
+            },
+            {
+                userType: "Customer",
+                name: "5Location & Profile",
+                images: [
+                    { name: "Location & Access.png", path: "/images/Projects/UI/5Skye Paddle/Customer/5Location&Profile/Location & Access.png" },
+                    { name: "Profile.png", path: "/images/Projects/UI/5Skye Paddle/Customer/5Location&Profile/Profile.png" }
+                ]
+            },
+
+            // Admin Categories
+            {
+                userType: "Admin",
+                name: "1Dashboard",
+                images: [
+                    { name: "Dashboard.png", path: "/images/Projects/UI/5Skye Paddle/Admin/1Dashboard/Dashboard.png" },
+                    { name: "Dashboard_Make Payment Booking Fee.png", path: "/images/Projects/UI/5Skye Paddle/Admin/1Dashboard/Dashboard_Make Payment Booking Fee.png" },
+                    { name: "Dashboard_Make Payment Booking Fee-1.png", path: "/images/Projects/UI/5Skye Paddle/Admin/1Dashboard/Dashboard_Make Payment Booking Fee-1.png" },
+                    { name: "Notification.png", path: "/images/Projects/UI/5Skye Paddle/Admin/1Dashboard/Notification.png" }
+                ]
+            },
+            {
+                userType: "Admin",
+                name: "2Bookings",
+                images: [
+                    { name: "Bookings.png", path: "/images/Projects/UI/5Skye Paddle/Admin/2Bookings/Bookings.png" },
+                    { name: "Action_Side Panel_Court.png", path: "/images/Projects/UI/5Skye Paddle/Admin/2Bookings/Action_Side Panel_Court.png" },
+                    { name: "Action_Side Panel_OPEN PLAY.png", path: "/images/Projects/UI/5Skye Paddle/Admin/2Bookings/Action_Side Panel_OPEN PLAY.png" }
+                ]
+            },
+            {
+                userType: "Admin",
+                name: "3Courts",
+                images: [
+                    { name: "Courts.png", path: "/images/Projects/UI/5Skye Paddle/Admin/3Courts/Courts.png" },
+                    { name: "Courts_Add New.png", path: "/images/Projects/UI/5Skye Paddle/Admin/3Courts/Courts_Add New.png" },
+                    { name: "Courts_Edit.png", path: "/images/Projects/UI/5Skye Paddle/Admin/3Courts/Courts_Edit.png" }
+                ]
+            },
+            {
+                userType: "Admin",
+                name: "4OpenPlay",
+                images: [
+                    { name: "Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Admin/4OpenPlay/Open Play.png" },
+                    { name: "Add Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Admin/4OpenPlay/Add Open Play.png" },
+                    { name: "Edit Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Admin/4OpenPlay/Edit Open Play.png" }
+                ]
+            },
+            {
+                userType: "Admin",
+                name: "5Payment Gateway",
+                images: [
+                    { name: "Payment Gateway.png", path: "/images/Projects/UI/5Skye Paddle/Admin/5PaymentGateway/Payment Gateway.png" },
+                    { name: "Payment Gateway_ADD.png", path: "/images/Projects/UI/5Skye Paddle/Admin/5PaymentGateway/Payment Gateway_ADD.png" },
+                    { name: "Payment Gateway_EDIT.png", path: "/images/Projects/UI/5Skye Paddle/Admin/5PaymentGateway/Payment Gateway_EDIT.png" }
+                ]
+            },
+            {
+                userType: "Admin",
+                name: "6Location & Access",
+                images: [
+                    { name: "Location & Access.png", path: "/images/Projects/UI/5Skye Paddle/Admin/6Location&Access/Location & Access.png" }
+                ]
+            },
+            {
+                userType: "Admin",
+                name: "7New Reservation",
+                images: [
+                    { name: "New Reservation_Court.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/New Reservation_Court.png" },
+                    { name: "Court Reservation.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/Court Reservation.png" },
+                    { name: "Court Reservation-1.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/Court Reservation-1.png" },
+                    { name: "Court Reservation-2.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/Court Reservation-2.png" },
+                    { name: "New Reservation_Open Play.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/New Reservation_Open Play.png" },
+                    { name: "New Reservation_Open Play-1.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/New Reservation_Open Play-1.png" },
+                    { name: "New Reservation_Open Play-2.png", path: "/images/Projects/UI/5Skye Paddle/Admin/7NewReservation/New Reservation_Open Play-2.png" }
+                ]
+            }
+        ]
     }
 ]
 
@@ -595,6 +725,7 @@ export function Projects() {
                 case "#ui-ux": setActiveCategory("UI/UX Designer"); break;
                 case "#graphic-artist": setActiveCategory("Graphic Designer"); break;
                 case "#social-media": setActiveCategory("Social Media Manager"); break;
+                case "#automation": setActiveCategory("Automation"); break;
                 case "#frontend": setActiveCategory("Developer"); break;
                 case "#3d-cad": setActiveCategory("3D CAD Designer"); break;
             }
@@ -669,8 +800,9 @@ export function Projects() {
                                             {category === "UI/UX Designer" ? "UI/UX" :
                                                 category === "Graphic Designer" ? "Graphics" :
                                                     category === "Social Media Manager" ? "Socials" :
-                                                        category === "Developer" ? "Dev" :
-                                                            "3D CAD"}
+                                                        category === "Automation" ? "Automation" :
+                                                            category === "Developer" ? "Dev" :
+                                                                "3D CAD"}
                                         </span>
                                         <span className="hidden md:inline">{category}</span>
                                     </button>
@@ -706,6 +838,8 @@ export function Projects() {
                                     </div>
                                 ) : activeCategory === "Social Media Manager" ? (
                                     <SocialMediaManager />
+                                ) : activeCategory === "Automation" ? (
+                                    <Automation />
                                 ) : activeCategory === "Developer" ? (
                                     <FrontendDeveloper />
                                 ) : activeCategory === "3D CAD Designer" ? (

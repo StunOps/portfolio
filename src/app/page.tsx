@@ -43,7 +43,7 @@ export default function Home() {
                 className="relative min-h-[calc(100vh-4rem)] flex flex-col overflow-hidden"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.8 }}
             >
@@ -55,8 +55,8 @@ export default function Home() {
                 </div>
 
                 {/* Decorative localized glow / Smoke Effect - Top Background */}
-                <div className="absolute -top-40 left-0 w-full h-[500px] bg-primary/60 rounded-[100%] blur-[120px] -z-10 animate-smoke-drift opacity-80" />
-                <div className="absolute -top-20 right-0 w-[600px] h-[400px] bg-orange-500/50 rounded-full blur-[100px] -z-10 animate-smoke-drift [animation-delay:3s]" />
+                <div className="absolute -top-40 left-0 w-full h-[500px] bg-primary/40 rounded-[100%] blur-3xl -z-10 animate-smoke-drift opacity-70 transform-gpu pointer-events-none" />
+                <div className="absolute -top-20 right-0 w-[500px] h-[350px] bg-orange-500/35 rounded-full blur-3xl -z-10 animate-smoke-drift [animation-delay:3s] opacity-70 transform-gpu pointer-events-none" />
 
                 <Container className="flex-grow py-12 md:pt-32 md:pb-24">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr] gap-8 lg:gap-12 items-center lg:items-start h-full">
@@ -83,7 +83,7 @@ export default function Home() {
                             </div>
 
                             <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
-                                A creative designer crafting digital visuals and interfaces that are simple, impactful, and <span className="text-primary font-bold">STUNning</span>.
+                                A Computer Engineering professional bridging <span className="text-white font-medium">Development</span>, <span className="text-white font-medium">Design</span>, and <span className="text-white font-medium">AI Engineering</span> to build intelligent, high-impact solutions that are truly <span className="text-primary font-bold">STUNning</span>.
                             </p>
                         </div>
 
@@ -97,6 +97,7 @@ export default function Home() {
                             <div className="min-h-[3.5rem] md:min-h-[5rem] h-auto flex items-center w-full justify-end py-1">
                                 <Typewriter
                                     text={[
+                                        "AI Automation",
                                         "UI/UX Designer",
                                         "Graphic Designer",
                                         "Social Media Manager",
