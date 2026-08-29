@@ -37,7 +37,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex flex-col relative w-full max-w-full overflow-x-clip">
+        <div className="flex flex-col relative w-full max-w-full">
 
             {/* --- HOME / HERO SECTION --- */}
             <motion.section

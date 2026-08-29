@@ -711,11 +711,39 @@ export function Projects() {
     const [activeCategory, setActiveCategory] = useState(categories[0])
     const [selectedProject, setSelectedProject] = useState<typeof uiUxProjects[0] | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isSticky, setIsSticky] = useState(false)
+
+    const sectionRef = useRef<HTMLElement>(null)
+    const titleRef = useRef<HTMLDivElement>(null)
 
     const handleProjectClick = (project: any) => {
         setSelectedProject(project)
         setIsModalOpen(true)
     }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!sectionRef.current || !titleRef.current) return
+
+            const titleRect = titleRef.current.getBoundingClientRect()
+            const sectionRect = sectionRef.current.getBoundingClientRect()
+
+            // Header offset (Navbar height ~64px)
+            const navbarOffset = 70
+
+            // 1. Triggers sticky when "My Projects" title passes above top navbar
+            const pastTitle = titleRect.bottom <= navbarOffset
+
+            // 2. Stays active while inside Projects section (whether scrolling down from Hero or scrolling UP from Education)
+            const withinSection = sectionRect.bottom >= 150
+
+            setIsSticky(pastTitle && withinSection)
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        handleScroll()
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     useEffect(() => {
         const handleHashChange = () => {
@@ -735,7 +763,7 @@ export function Projects() {
     }, [])
 
     return (
-        <section id="projects" className="relative pt-4 md:pt-6 pb-16 md:pb-24">
+        <section ref={sectionRef} id="projects" className="relative pt-4 md:pt-6 pb-16 md:pb-24">
             {/* Background Glow */}
             <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] -z-10 pointer-events-none" />
 
@@ -743,7 +771,7 @@ export function Projects() {
                 <Container>
                     <div className="flex flex-col gap-12">
                         {/* Title and Segmented Control */}
-                        <div className="flex flex-col items-center gap-8 relative z-10">
+                        <div ref={titleRef} className="flex flex-col items-center gap-8 relative z-10">
                             <motion.div
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -760,9 +788,17 @@ export function Projects() {
                             </motion.div>
                         </div>
 
-                        {/* Category Pills Bar */}
-                        <div className="flex justify-center px-1 md:px-4 w-full">
-                            <div className="flex flex-nowrap items-center justify-center gap-0.5 sm:gap-1 md:gap-2 p-1 sm:p-1.5 bg-white/10 dark:bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-xl shadow-black/20 ring-1 ring-white/10 max-w-full">
+                        {/* Category Pills Bar Slot (Static height slot prevents magnet/jump layout shifts) */}
+                        <div className="relative w-full min-h-[52px] flex justify-center items-center">
+                            <div
+                                className={cn(
+                                    "flex justify-center w-full py-1 pointer-events-none transition-none",
+                                    isSticky
+                                        ? "fixed top-16 md:top-20 left-1/2 -translate-x-1/2 z-40 max-w-full px-2 sm:px-4"
+                                        : "relative z-30"
+                                )}
+                            >
+                                <div className="pointer-events-auto flex flex-nowrap items-center justify-center gap-0.5 sm:gap-1 md:gap-2 p-1 sm:p-1.5 bg-white/15 dark:bg-white/15 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-2xl shadow-black/60 ring-1 ring-white/10 max-w-full">
                                 {categories.map((category) => (
                                     <button
                                         key={category}
@@ -802,6 +838,7 @@ export function Projects() {
                                 ))}
                             </div>
                         </div>
+                    </div>
 
 
                         {/* Content Area */}
