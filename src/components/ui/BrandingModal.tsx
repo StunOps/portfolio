@@ -52,9 +52,9 @@ export function BrandingModal({ project, isOpen, onClose }: BrandingModalProps) 
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/50 backdrop-blur-md z-10 shrink-0">
-                            <div>
-                                <h3 className="text-xl font-bold text-white">{project.name}</h3>
-                                <p className="text-sm text-muted-foreground">{project.description}</p>
+                            <div className="min-w-0 pr-4">
+                                <h3 className="text-lg sm:text-xl font-bold text-white break-words">{project.name}</h3>
+                                <p className="text-xs sm:text-sm text-muted-foreground break-words [overflow-wrap:anywhere]">{project.description}</p>
                             </div>
                             <button
                                 onClick={onClose}

@@ -129,11 +129,11 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/10 bg-white/5 backdrop-blur-md">
-                            <div className="flex flex-col gap-2 min-w-0">
-                                <h2 className="text-xl md:text-3xl font-bold text-white truncate">{project.title}</h2>
-                                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-                                    <div className="flex items-center gap-4">
-                                        <p className="text-muted-foreground text-sm md:text-base">{project.subtitle}</p>
+                            <div className="flex flex-col gap-1 sm:gap-2 min-w-0 pr-2">
+                                <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white break-words [overflow-wrap:anywhere]">{project.title}</h2>
+                                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 min-w-0">
+                                    <div className="flex items-center gap-4 flex-wrap min-w-0">
+                                        <p className="text-muted-foreground text-xs sm:text-sm md:text-base break-words">{project.subtitle}</p>
                                         <div className="hidden md:block h-4 w-[1px] bg-white/20" />
                                         <div className="flex gap-2">
                                             {project.tools.map((tool) => (

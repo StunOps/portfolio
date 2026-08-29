@@ -285,6 +285,14 @@ function SMMModal({ project, onClose }: { project: SMMProject; onClose: () => vo
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isSkillsOpen, setIsSkillsOpen] = useState(false)
 
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        document.body.style.overflow = "hidden"
+        return () => {
+            document.body.style.overflow = ""
+        }
+    }, [])
+
     // Reset index when tab changes
     useEffect(() => {
         setCurrentIndex(0)
@@ -307,7 +315,7 @@ function SMMModal({ project, onClose }: { project: SMMProject; onClose: () => vo
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-start md:items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 overflow-y-auto custom-scrollbar"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-2 sm:p-4 md:p-8 overflow-hidden touch-none"
             onClick={onClose}
         >
             <motion.div
@@ -315,10 +323,10 @@ function SMMModal({ project, onClose }: { project: SMMProject; onClose: () => vo
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-6xl bg-gray-900 rounded-3xl border border-white/10 overflow-hidden flex flex-col md:flex-row shadow-2xl h-auto md:h-[80vh] my-8 md:my-0 shrink-0"
+                className="w-full max-w-6xl max-h-[92vh] md:max-h-[85vh] bg-gray-900 rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden flex flex-col md:flex-row shadow-2xl h-full relative min-w-0"
             >
                 {/* Header / Sidebar (Mobile: Top, Desktop: Left) */}
-                <div className="w-full md:w-[350px] shrink-0 bg-primary/10 border-b md:border-b-0 md:border-r border-white/10 p-6 md:p-8 flex flex-col gap-6 relative overflow-y-auto custom-scrollbar">
+                <div className="w-full md:w-[350px] shrink-0 bg-primary/10 border-b md:border-b-0 md:border-r border-white/10 p-4 sm:p-6 md:p-8 flex flex-col gap-4 md:gap-6 relative overflow-y-auto max-h-[45vh] md:max-h-full custom-scrollbar min-w-0">
                     {/* Close Button Mobile */}
                     <button
                         onClick={onClose}
@@ -427,7 +435,7 @@ function SMMModal({ project, onClose }: { project: SMMProject; onClose: () => vo
                 </div>
 
                 {/* Body / Gallery Area */}
-                <div className="flex-1 relative bg-primary/5 flex flex-col">
+                <div className="flex-1 relative bg-primary/5 flex flex-col min-w-0 min-h-0 overflow-hidden">
                     {/* Close Button Desktop */}
                     <button
                         onClick={onClose}
@@ -437,7 +445,7 @@ function SMMModal({ project, onClose }: { project: SMMProject; onClose: () => vo
                     </button>
 
                     {/* Image Display */}
-                    <div className="flex-1 relative flex items-center justify-center p-4 md:p-12 overflow-hidden group/gallery">
+                    <div className="flex-1 relative flex items-center justify-center p-2 sm:p-4 md:p-12 overflow-hidden group/gallery min-h-0">
                         {images.length > 0 && images[currentIndex] ? (
                             <>
                                 <AnimatePresence mode="wait">
@@ -447,13 +455,13 @@ function SMMModal({ project, onClose }: { project: SMMProject; onClose: () => vo
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -20 }}
                                         transition={{ duration: 0.3 }}
-                                        className="relative w-full h-full max-h-[600px] aspect-[4/5] md:aspect-video rounded-xl overflow-hidden shadow-2xl"
+                                        className="relative w-full h-full max-h-[450px] md:max-h-[600px] rounded-xl overflow-hidden shadow-2xl flex items-center justify-center"
                                     >
                                         <Image
                                             src={images[currentIndex]}
                                             alt={`${project.name} ${activeTab} ${currentIndex + 1}`}
                                             fill
-                                            className="object-contain bg-black/50"
+                                            className="object-contain bg-black/50 max-w-full max-h-full"
                                         />
                                     </motion.div>
                                 </AnimatePresence>

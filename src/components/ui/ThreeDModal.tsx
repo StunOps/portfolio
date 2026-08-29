@@ -218,10 +218,10 @@ export function ThreeDModal({ isOpen, onClose, project }: ThreeDModalProps) {
                                 <span>•</span>
                                 <span>{project.category}</span>
                             </div>
-                            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-white truncate">
+                            <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-white break-words [overflow-wrap:anywhere]">
                                 {project.title}
                             </h2>
-                            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
+                            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed break-words [overflow-wrap:anywhere]">
                                 {project.description}
                             </p>
                         </div>

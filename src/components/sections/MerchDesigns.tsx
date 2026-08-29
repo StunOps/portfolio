@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useMemo } from "react"
+import { useState, useRef, useMemo, useEffect } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Layers, X, ZoomIn, ChevronDown, ChevronUp } from "lucide-react"
@@ -147,6 +147,18 @@ export function MerchDesigns() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null)
     const isDragging = useRef(false)
 
+    // Lock body scroll when lightbox is open
+    useEffect(() => {
+        if (selectedImage) {
+            document.body.style.overflow = "hidden"
+        } else {
+            document.body.style.overflow = ""
+        }
+        return () => {
+            document.body.style.overflow = ""
+        }
+    }, [selectedImage])
+
     const activeProject = projects[0]
     const stackProjects = projects.slice(1)
 
@@ -220,7 +232,7 @@ export function MerchDesigns() {
     const hiddenCount = totalCollections - visibleCollectionCount
 
     return (
-        <div className="w-full space-y-8 mt-32">
+        <div className="w-full max-w-full overflow-hidden space-y-8 mt-32">
             {/* Header */}
             <div className="px-4 md:px-0 text-center xl:text-left">
                 <h2 className="text-3xl md:text-4xl font-bold">
@@ -229,12 +241,12 @@ export function MerchDesigns() {
                 <p className="text-muted-foreground mt-2 max-w-2xl mx-auto xl:mx-0">
                     Select a card from the stack to view details.
                     <span className="xl:hidden block mt-1 text-primary text-sm animate-pulse">
-                        &larr; Swipe image to browse &rarr;
+                        &larr; Swipe image or tap arrows to browse &rarr;
                     </span>
                 </p>
             </div>
 
-            <div className="flex flex-col xl:flex-row gap-8 min-h-[600px] relative">
+            <div className="flex flex-col xl:flex-row gap-8 min-h-[600px] relative max-w-full overflow-hidden">
 
                 {/* LEFT: Active View */}
                 <div className="w-full xl:w-2/3 relative z-10">
@@ -249,10 +261,11 @@ export function MerchDesigns() {
                         >
                             {/* Hero Image Area - Swipeable on Mobile */}
                             <motion.div
-                                className="relative h-[250px] w-full shrink-0 cursor-grab active:cursor-grabbing touch-pan-y"
+                                className="relative h-[250px] w-full shrink-0 cursor-grab active:cursor-grabbing select-none"
+                                style={{ touchAction: "pan-y" }}
                                 drag="x"
                                 dragConstraints={{ left: 0, right: 0 }}
-                                dragElastic={0.2}
+                                dragElastic={0.1}
                                 onDragEnd={(e, info) => {
                                     const swipeThreshold = 50
                                     if (info.offset.x < -swipeThreshold) {
@@ -270,18 +283,31 @@ export function MerchDesigns() {
                                     unoptimized
                                     draggable={false}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
-                                <div className="absolute bottom-6 left-8">
-                                    <h3 className="text-3xl font-bold text-white mb-2">{activeProject.name}</h3>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
+                                <div className="absolute bottom-6 left-8 pointer-events-none">
+                                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">{activeProject.name}</h3>
                                     <div className="flex items-center gap-2 text-primary">
                                         <Layers className="w-4 h-4" />
                                         <span className="text-sm font-medium">{activeProject.subProjects.length} Collections</span>
                                     </div>
                                 </div>
 
-                                {/* Mobile Interaction Hint */}
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 xl:hidden text-white/20">
-                                    <ArrowRight className="w-6 h-6 animate-pulse" />
+                                {/* Mobile Controls Overlay */}
+                                <div className="absolute inset-y-0 inset-x-3 flex items-center justify-between xl:hidden pointer-events-none z-20">
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); handleSwipePrev(); }}
+                                        className="pointer-events-auto p-2 rounded-full bg-black/60 border border-white/20 text-white hover:bg-primary transition-colors shadow-lg"
+                                        aria-label="Previous Category"
+                                    >
+                                        <ArrowLeft className="w-5 h-5" />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); handleSwipeNext(); }}
+                                        className="pointer-events-auto p-2 rounded-full bg-black/60 border border-white/20 text-white hover:bg-primary transition-colors shadow-lg"
+                                        aria-label="Next Category"
+                                    >
+                                        <ArrowRight className="w-5 h-5" />
+                                    </button>
                                 </div>
                             </motion.div>
 
@@ -450,28 +476,29 @@ export function MerchDesigns() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 md:p-8 overflow-hidden touch-none"
                         onClick={() => setSelectedImage(null)}
                     >
                         <button
-                            className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors z-[110]"
+                            className="absolute top-4 right-4 md:top-8 md:right-8 text-white/80 hover:text-white p-2.5 rounded-full bg-black/60 border border-white/20 hover:bg-white/20 transition-colors z-[110]"
                             onClick={() => setSelectedImage(null)}
+                            aria-label="Close Lightbox"
                         >
-                            <X className="w-8 h-8" />
+                            <X className="w-6 h-6 sm:w-8 sm:h-8" />
                         </button>
 
                         <motion.div
-                            className="relative w-full h-full max-w-7xl max-h-[90vh]"
+                            className="relative w-full max-w-5xl h-[85vh] max-h-[85vh] flex items-center justify-center overflow-hidden p-2"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
-                            onClick={(e) => e.stopPropagation()} // Prevent close when clicking image area
+                            onClick={(e) => e.stopPropagation()}
                         >
                             <Image
                                 src={selectedImage}
                                 alt="Full screen preview"
                                 fill
-                                className="object-contain"
+                                className="object-contain max-w-full max-h-full"
                                 unoptimized
                             />
                         </motion.div>

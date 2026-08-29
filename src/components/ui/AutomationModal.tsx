@@ -270,12 +270,12 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                                 <div className="flex-1 p-4 sm:p-6 md:p-10 overflow-y-auto custom-scrollbar space-y-6 sm:space-y-8 md:space-y-10 bg-gradient-to-b from-transparent to-black/30">
 
                                     {/* Section 1: Title, Subtitle & Description */}
-                                    <div className="space-y-3 sm:space-y-4 max-w-4xl">
-                                        <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                                    <div className="space-y-3 sm:space-y-4 max-w-4xl min-w-0">
+                                        <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight break-words [overflow-wrap:anywhere]">
                                             {project.title}
                                         </h1>
-                                        <p className="text-xs sm:text-sm font-semibold text-primary/80 uppercase tracking-wider">{project.subtitle}</p>
-                                        <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
+                                        <p className="text-xs sm:text-sm font-semibold text-primary/80 uppercase tracking-wider break-words">{project.subtitle}</p>
+                                        <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed break-words [overflow-wrap:anywhere]">
                                             {project.description}
                                         </p>
                                     </div>
