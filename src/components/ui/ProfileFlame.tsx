@@ -8,6 +8,8 @@ export function ProfileFlame() {
     const [isBursting, setIsBursting] = useState(false)
 
     const triggerBurst = () => {
+        // Disable particle burst effect on mobile viewports to keep tap response fast and smooth
+        if (typeof window !== "undefined" && window.innerWidth < 768) return
         if (isBursting) return
         setIsBursting(true)
         setTimeout(() => setIsBursting(false), 2000)

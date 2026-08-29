@@ -79,11 +79,9 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
     // Lock body scroll and register keyboard navigation
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "hidden"
+            document.body.style.overflow = "hidden"
         } else {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "unset"
+            document.body.style.overflow = ""
         }
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -99,8 +97,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
         window.addEventListener("keydown", handleKeyDown)
 
         return () => {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "unset"
+            document.body.style.overflow = ""
             window.removeEventListener("keydown", handleKeyDown)
         }
     }, [isOpen, lightboxIndex, handlePrevImage, handleNextImage, onClose])

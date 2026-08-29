@@ -1,7 +1,7 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-function SplashCursor({
+function SplashCursorContent({
     SIM_RESOLUTION = 64,
     DYE_RESOLUTION = 512,
     CAPTURE_RESOLUTION = 256,
@@ -16,16 +16,11 @@ function SplashCursor({
     COLOR_UPDATE_SPEED = 10,
     BACK_COLOR = { r: 0, g: 0, b: 0 },
     TRANSPARENT = true
-}) {
+}: any) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const animationFrameId = useRef<number | null>(null);
 
     useEffect(() => {
-        // Disable fluid cursor on mobile / touch devices for maximum smoothness and zero lag
-        if (typeof window !== "undefined" && (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches)) {
-            return;
-        }
-
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -1091,4 +1086,22 @@ function SplashCursor({
     );
 }
 
-export default SplashCursor;
+export default function SplashCursor(props: any) {
+    const [isMobile, setIsMobile] = useState<boolean>(true);
+    const [mounted, setMounted] = useState<boolean>(false);
+
+    useEffect(() => {
+        setMounted(true);
+        const checkMobile = () => {
+            const mobile = window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches;
+            setIsMobile(mobile);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    if (!mounted || isMobile) return null;
+
+    return <SplashCursorContent {...props} />;
+}

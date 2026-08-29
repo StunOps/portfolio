@@ -87,15 +87,12 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
     // Lock body scroll when modal is open
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "hidden"
+            document.body.style.overflow = "hidden"
         } else {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "unset"
+            document.body.style.overflow = ""
         }
         return () => {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "unset"
+            document.body.style.overflow = ""
         }
     }, [isOpen])
 

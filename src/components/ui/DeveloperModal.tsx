@@ -121,11 +121,9 @@ export function DeveloperModal({ isOpen, onClose, project }: DeveloperModalProps
     // Lock body scroll and keyboard listeners
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "hidden"
+            document.body.style.overflow = "hidden"
         } else {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "unset"
+            document.body.style.overflow = ""
         }
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -141,8 +139,7 @@ export function DeveloperModal({ isOpen, onClose, project }: DeveloperModalProps
         window.addEventListener("keydown", handleKeyDown)
 
         return () => {
-            document.body.style.overflowX = "hidden"
-            document.body.style.overflowY = "unset"
+            document.body.style.overflow = ""
             window.removeEventListener("keydown", handleKeyDown)
         }
     }, [isOpen, lightboxIndex, handlePrevImage, handleNextImage, onClose])
