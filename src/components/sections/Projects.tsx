@@ -761,8 +761,8 @@ export function Projects() {
                         </div>
 
                         {/* Category Pills Bar */}
-                        <div className="flex justify-center px-2 md:px-4 w-full">
-                            <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2 p-1.5 bg-white/10 dark:bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-xl shadow-black/20 ring-1 ring-white/10">
+                        <div className="flex justify-center px-1 md:px-4 w-full">
+                            <div className="flex flex-nowrap items-center justify-center gap-0.5 sm:gap-1 md:gap-2 p-1 sm:p-1.5 bg-white/10 dark:bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-xl shadow-black/20 ring-1 ring-white/10 max-w-full">
                                 {categories.map((category) => (
                                     <button
                                         key={category}
@@ -783,7 +783,7 @@ export function Projects() {
                                             }
                                         }}
                                         className={cn(
-                                            "relative px-3 py-1.5 md:px-5 md:py-2 text-[11px] md:text-sm font-medium rounded-xl transition-all duration-200 text-center",
+                                            "relative px-1.5 py-1.5 sm:px-2.5 sm:py-1.5 md:px-5 md:py-2 text-[10px] sm:text-xs md:text-sm font-medium rounded-xl transition-all duration-200 text-center whitespace-nowrap shrink-0",
                                             activeCategory === category
                                                 ? "text-white bg-primary font-semibold shadow-md shadow-primary/30"
                                                 : "text-zinc-200 hover:text-white hover:bg-white/15"
