@@ -40,36 +40,36 @@ export function Contact() {
     }
 
     return (
-        <section id="contact" className="relative pt-4 md:pt-6 pb-12 md:pb-16">
+        <section id="contact" className="relative pt-4 md:pt-6 pb-8 md:pb-12 overflow-hidden max-w-full w-full">
             {/* Background Decoration */}
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-[280px] sm:w-[350px] md:w-[500px] h-[280px] sm:h-[350px] md:h-[500px] bg-primary/5 rounded-full blur-[80px] md:blur-[120px] -z-10 pointer-events-none translate-y-1/2 overflow-hidden" />
 
             <Container>
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-8 md:gap-12 w-full max-w-full">
                     {/* Header */}
-                    <div className="flex flex-col items-center text-center gap-6">
+                    <div className="flex flex-col items-center text-center gap-4 sm:gap-6">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: false, amount: 0.2 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h2 className="text-4xl md:text-5xl font-bold">
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
                                 Let's <span className="text-primary">Connect</span>
                             </h2>
                         </motion.div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 max-w-5xl mx-auto w-full min-w-0">
                         {/* Left Column: Contact Info */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: false, amount: 0.2 }}
                             transition={{ duration: 0.5 }}
-                            className="flex flex-col gap-8"
+                            className="flex flex-col gap-8 min-w-0 w-full"
                         >
-                            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 md:p-8 transition-all duration-300 hover:border-primary/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-primary/5 h-full flex flex-col justify-between gap-8 group">
+                            <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-4 sm:p-6 md:p-8 transition-all duration-300 hover:border-primary/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-primary/5 h-full flex flex-col justify-between gap-6 md:gap-8 group min-w-0 w-full">
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                                 <div className="space-y-8 relative z-10">
@@ -173,8 +173,9 @@ export function Contact() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: false, amount: 0.2 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
+                            className="min-w-0 w-full"
                         >
-                            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 md:p-8 transition-all duration-300 hover:border-primary/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-primary/5 h-full group">
+                            <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-4 sm:p-6 md:p-8 transition-all duration-300 hover:border-primary/50 hover:bg-white/10 hover:shadow-2xl hover:shadow-primary/5 h-full group min-w-0 w-full">
                                 {isSuccess ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in duration-500">
                                         <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 border border-green-500/20">

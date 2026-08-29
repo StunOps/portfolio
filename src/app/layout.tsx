@@ -63,11 +63,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground relative overflow-x-hidden w-full max-w-full`}
       >
         <SplashCursor />
         <Navbar />
-        <main className="w-full">
+        <main className="w-full max-w-full overflow-x-hidden">
           {children}
         </main>
         <Footer />

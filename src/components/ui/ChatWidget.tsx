@@ -11,33 +11,24 @@ interface ChatMessage {
     id: string;
     role: "user" | "assistant";
     content: string;
-    createdAt: Date;
 }
 
 export function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [localInput, setLocalInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [messages, setMessages] = useState<ChatMessage[]>([
+        {
+            id: "greeting",
+            role: "assistant",
+            content: "Hi! I'm Stunley's AI Assistant 🦊. Ask me anything about his projects, technical skills, design work, or background!",
+        },
+    ]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
-
-    // Initial greeting
-    useEffect(() => {
-        if (isOpen && messages.length === 0) {
-            setMessages([
-                {
-                    id: "greeting",
-                    role: "assistant",
-                    content: "Hi! I'm Stunley's AI Assistant. Ask me anything about his projects, skills, or experience!",
-                    createdAt: new Date(),
-                },
-            ]);
-        }
-    }, [isOpen, messages.length]);
 
     useEffect(() => {
         scrollToBottom();
@@ -48,29 +39,51 @@ export function ChatWidget() {
         const trimmedInput = localInput.trim();
         if (!trimmedInput || isTyping) return;
 
-        // 1. Add User Message
+        // Add user message
         const userMsg: ChatMessage = {
             id: Date.now().toString(),
             role: "user",
             content: trimmedInput,
-            createdAt: new Date(),
         };
 
-        setMessages((prev) => [...prev, userMsg]);
+        const updatedMessages = [...messages, userMsg];
+        setMessages(updatedMessages);
         setLocalInput("");
         setIsTyping(true);
 
-        // 2. Simulate AI response delay
-        setTimeout(() => {
-            const assistantMsg: ChatMessage = {
-                id: (Date.now() + 1).toString(),
-                role: "assistant",
-                content: "Stun is currently working on this AI to help you more efficiently. Please wait a moment. 🦊",
-                createdAt: new Date(),
-            };
-            setMessages((prev) => [...prev, assistantMsg]);
+        try {
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ messages: updatedMessages }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to fetch response from AI");
+            }
+
+            const aiResponseText = data.text || "Hello! How can I help you today? 🦊";
+
+            setMessages((prev) => [
+                ...prev,
+                { id: Date.now().toString(), role: "assistant", content: aiResponseText },
+            ]);
+        } catch (error: any) {
+            console.error("Chat error:", error);
+            const errDetail = error?.message || "Invalid API key or network error";
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: Date.now().toString(),
+                    role: "assistant",
+                    content: `⚠️ API Error: ${errDetail}\n\nPlease check your key in .env.local or restart server.`,
+                },
+            ]);
+        } finally {
             setIsTyping(false);
-        }, 1000);
+        }
     };
 
     return (
@@ -81,7 +94,7 @@ export function ChatWidget() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="w-[calc(100vw-2rem)] max-w-[350px] md:max-w-[400px] h-[500px] rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
+                        className="w-[calc(100vw-2rem)] max-w-[350px] md:max-w-[400px] h-[500px] rounded-2xl border border-white/10 bg-black/80 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
                     >
                         {/* Header */}
                         <div className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
@@ -98,7 +111,7 @@ export function ChatWidget() {
                                     <h3 className="font-semibold text-white text-sm">SD's AI Assistant</h3>
                                     <div className="flex items-center gap-1.5">
                                         <span className={`w-2 h-2 rounded-full ${isTyping ? "bg-orange-500 animate-bounce" : "bg-green-500 animate-pulse"}`} />
-                                        <span className="text-xs text-zinc-400">{isTyping ? "Thinking..." : "Building..."}</span>
+                                        <span className="text-xs text-zinc-400">{isTyping ? "Thinking..." : "Online"}</span>
                                     </div>
                                 </div>
                             </div>
@@ -124,10 +137,10 @@ export function ChatWidget() {
                                 >
                                     <div
                                         className={cn(
-                                            "max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap",
+                                            "max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap",
                                             msg.role === "user"
                                                 ? "bg-orange-600 text-white rounded-tr-none"
-                                                : "bg-zinc-800/50 border border-white/5 text-zinc-200 rounded-tl-none font-medium"
+                                                : "bg-zinc-800/80 border border-white/10 text-zinc-100 rounded-tl-none font-normal"
                                         )}
                                     >
                                         {msg.content}
@@ -137,7 +150,7 @@ export function ChatWidget() {
                             {isTyping && (
                                 <div className="flex justify-start">
                                     <div className="bg-zinc-800/50 border border-white/5 text-zinc-400 p-3 rounded-2xl rounded-tl-none text-xs italic">
-                                        Assistant is typing...
+                                        Assistant is thinking... 🦊
                                     </div>
                                 </div>
                             )}
@@ -154,8 +167,8 @@ export function ChatWidget() {
                                     type="text"
                                     value={localInput}
                                     onChange={(e) => setLocalInput(e.target.value)}
-                                    placeholder="Ask anything..."
-                                    className="w-full bg-zinc-900/50 border border-white/10 rounded-full py-2.5 pl-4 pr-12 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all font-inter"
+                                    placeholder="Ask about Stun's projects or skills..."
+                                    className="w-full bg-zinc-900/80 border border-white/10 rounded-full py-2.5 pl-4 pr-12 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/50 transition-all font-inter"
                                 />
                                 <Button
                                     type="submit"

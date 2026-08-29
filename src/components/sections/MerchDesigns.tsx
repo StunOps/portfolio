@@ -168,11 +168,31 @@ export function MerchDesigns() {
         setVisibleCounts({})
     }, [activeProject.id])
 
+    const touchStartX = useRef<number | null>(null)
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStartX.current === null) return
+        const touchEndX = e.changedTouches[0].clientX
+        const diffX = touchStartX.current - touchEndX
+
+        if (Math.abs(diffX) > 40) {
+            if (diffX > 0) {
+                handleSwipeNext()
+            } else {
+                handleSwipePrev()
+            }
+        }
+        touchStartX.current = null
+    }
+
     const handleShuffle = () => {
         setProjects(prev => {
-            if (prev.length < 2) return prev
-            const [active, top, ...rest] = prev
-            return [active, ...rest, top]
+            const [top, ...rest] = prev
+            return [...rest, top]
         })
     }
 
@@ -259,21 +279,11 @@ export function MerchDesigns() {
                             exit={{ opacity: 0, x: 20 }}
                             transition={{ duration: 0.4, ease: "easeInOut" }}
                         >
-                            {/* Hero Image Area - Swipeable on Mobile */}
-                            <motion.div
-                                className="relative h-[250px] w-full shrink-0 cursor-grab active:cursor-grabbing select-none"
-                                style={{ touchAction: "pan-y" }}
-                                drag="x"
-                                dragConstraints={{ left: 0, right: 0 }}
-                                dragElastic={0.1}
-                                onDragEnd={(e, info) => {
-                                    const swipeThreshold = 50
-                                    if (info.offset.x < -swipeThreshold) {
-                                        handleSwipeNext()
-                                    } else if (info.offset.x > swipeThreshold) {
-                                        handleSwipePrev()
-                                    }
-                                }}
+                            {/* Hero Image Area - Swipeable on Mobile without trapping page scroll */}
+                            <div
+                                className="relative h-[250px] w-full shrink-0 select-none overflow-hidden"
+                                onTouchStart={handleTouchStart}
+                                onTouchEnd={handleTouchEnd}
                             >
                                 <Image
                                     src={activeProject.overview}
@@ -309,10 +319,10 @@ export function MerchDesigns() {
                                         <ArrowRight className="w-5 h-5" />
                                     </button>
                                 </div>
-                            </motion.div>
+                            </div>
 
-                            {/* Content Area */}
-                            <div className="p-6 md:p-8 flex-1 overflow-y-auto min-h-[200px] bg-black/20 backdrop-blur-sm custom-scrollbar">
+                            {/* Content Area - Flows naturally with page scroll */}
+                            <div className="p-6 md:p-8 flex-1 min-h-[200px] bg-black/20 backdrop-blur-sm">
                                 {activeProject.subProjects.length > 0 ? (
                                     <div className="space-y-10">
                                         {visibleSubProjects.map((sub, idx) => {

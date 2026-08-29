@@ -37,12 +37,12 @@ export default function Home() {
     }
 
     return (
-        <div className="flex flex-col relative">
+        <div className="flex flex-col relative w-full max-w-full overflow-x-hidden">
 
             {/* --- HOME / HERO SECTION --- */}
             <motion.section
                 id="home"
-                className="relative min-h-[calc(100vh-4rem)] flex flex-col overflow-hidden"
+                className="relative min-h-[calc(100vh-4rem)] flex flex-col overflow-hidden max-w-full"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.1 }}
@@ -51,15 +51,15 @@ export default function Home() {
             >
 
                 {/* Aurora Background */}
-                <div className="absolute inset-0 -z-20">
+                <div className="absolute inset-0 -z-20 overflow-hidden">
                     <AuroraBackground className="h-full w-full bg-transparent dark:bg-transparent" showRadialGradient={true}>
                     </AuroraBackground>
                 </div>
 
                 {/* Decorative localized glow / Smoke Effect - Top Background */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 max-w-full">
                     <div className="absolute -top-40 left-0 w-full h-[500px] bg-primary/40 rounded-[100%] blur-3xl animate-smoke-drift opacity-70 transform-gpu" />
-                    <div className="absolute -top-20 right-0 w-full max-w-[500px] h-[350px] bg-orange-500/35 rounded-full blur-3xl animate-smoke-drift [animation-delay:3s] opacity-70 transform-gpu" />
+                    <div className="absolute -top-20 right-0 w-full max-w-[300px] sm:max-w-[500px] h-[350px] bg-orange-500/35 rounded-full blur-3xl animate-smoke-drift [animation-delay:3s] opacity-70 transform-gpu overflow-hidden" />
                 </div>
 
                 <Container className="flex-grow py-12 md:pt-32 md:pb-24">
