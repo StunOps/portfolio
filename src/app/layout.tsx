@@ -61,13 +61,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-x-hidden max-w-full">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground overflow-x-hidden max-w-full relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground relative`}
       >
         <SplashCursor />
         <Navbar />
-        <main className="w-full overflow-x-hidden max-w-full">
+        <main className="w-full">
           {children}
         </main>
         <Footer />

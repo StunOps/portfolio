@@ -2,13 +2,13 @@
 import { useEffect, useRef } from 'react';
 
 function SplashCursor({
-    SIM_RESOLUTION = 128,
-    DYE_RESOLUTION = 1440,
-    CAPTURE_RESOLUTION = 512,
+    SIM_RESOLUTION = 64,
+    DYE_RESOLUTION = 512,
+    CAPTURE_RESOLUTION = 256,
     DENSITY_DISSIPATION = 3.5,
     VELOCITY_DISSIPATION = 2,
     PRESSURE = 0.1,
-    PRESSURE_ITERATIONS = 20,
+    PRESSURE_ITERATIONS = 10,
     CURL = 3,
     SPLAT_RADIUS = 0.2,
     SPLAT_FORCE = 6000,
@@ -21,6 +21,11 @@ function SplashCursor({
     const animationFrameId = useRef<number | null>(null);
 
     useEffect(() => {
+        // Disable fluid cursor on mobile / touch devices for maximum smoothness and zero lag
+        if (typeof window !== "undefined" && (window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches)) {
+            return;
+        }
+
         const canvas = canvasRef.current;
         if (!canvas) return;
 
