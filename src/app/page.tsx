@@ -37,7 +37,7 @@ export default function Home() {
     }
 
     return (
-        <div className="flex flex-col relative">
+        <div className="flex flex-col relative overflow-x-hidden max-w-full">
 
             {/* --- HOME / HERO SECTION --- */}
             <motion.section
@@ -57,8 +57,10 @@ export default function Home() {
                 </div>
 
                 {/* Decorative localized glow / Smoke Effect - Top Background */}
-                <div className="absolute -top-40 left-0 w-full h-[500px] bg-primary/40 rounded-[100%] blur-3xl -z-10 animate-smoke-drift opacity-70 transform-gpu pointer-events-none" />
-                <div className="absolute -top-20 right-0 w-[500px] h-[350px] bg-orange-500/35 rounded-full blur-3xl -z-10 animate-smoke-drift [animation-delay:3s] opacity-70 transform-gpu pointer-events-none" />
+                <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+                    <div className="absolute -top-40 left-0 w-full h-[500px] bg-primary/40 rounded-[100%] blur-3xl animate-smoke-drift opacity-70 transform-gpu" />
+                    <div className="absolute -top-20 right-0 w-full max-w-[500px] h-[350px] bg-orange-500/35 rounded-full blur-3xl animate-smoke-drift [animation-delay:3s] opacity-70 transform-gpu" />
+                </div>
 
                 <Container className="flex-grow py-12 md:pt-32 md:pb-24">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr] gap-8 lg:gap-12 items-center lg:items-start h-full">

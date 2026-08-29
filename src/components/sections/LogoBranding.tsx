@@ -152,7 +152,7 @@ export function LogoBranding() {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.05, duration: 0.5 }}
                             onClick={() => handleProjectClick(project)}
-                            className="relative group shrink-0 w-[320px] md:w-[400px] aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm hover:border-primary transition-colors duration-300 pointer-events-auto"
+                            className="relative group shrink-0 w-[280px] sm:w-[350px] md:w-[400px] aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm hover:border-primary transition-colors duration-300 pointer-events-auto"
                         >
                             {/* Image */}
                             <Image

@@ -93,14 +93,17 @@ export function ThreeDModal({ isOpen, onClose, project }: ThreeDModalProps) {
 
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflow = "hidden"
+            document.body.style.overflowX = "hidden"
+            document.body.style.overflowY = "hidden"
             setIsMobileGalleryOpen(false)
             setSelectedLightboxImage(null)
         } else {
-            document.body.style.overflow = "unset"
+            document.body.style.overflowX = "hidden"
+            document.body.style.overflowY = "unset"
         }
         return () => {
-            document.body.style.overflow = "unset"
+            document.body.style.overflowX = "hidden"
+            document.body.style.overflowY = "unset"
         }
     }, [isOpen])
 
