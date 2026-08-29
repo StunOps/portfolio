@@ -17,7 +17,7 @@ export function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [localInput, setLocalInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
-    const [viewportHeight, setViewportHeight] = useState<number | null>(null);
+    const [mobileStyle, setMobileStyle] = useState<React.CSSProperties>({});
     const [messages, setMessages] = useState<ChatMessage[]>([
         {
             id: "greeting",
@@ -37,33 +37,49 @@ export function ChatWidget() {
         scrollToBottom();
     }, [messages, isOpen, isTyping]);
 
-    // Handle Mobile Keyboard Overlay via VisualViewport API
+    // Precise Mobile Virtual Keyboard Auto-Lifting & Resizing
     useEffect(() => {
-        if (typeof window === "undefined" || !window.visualViewport) return;
+        if (typeof window === "undefined") return;
 
-        const handleViewportResize = () => {
-            if (window.innerWidth < 768) {
-                setViewportHeight(window.visualViewport?.height || null);
+        const updatePosition = () => {
+            if (window.innerWidth < 640 && window.visualViewport) {
+                const vv = window.visualViewport;
+                // Calculate exact height of the open virtual keyboard
+                const keyboardHeight = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+                const activeHeight = Math.min(vv.height - 24, 520);
+
+                setMobileStyle({
+                    position: "fixed",
+                    bottom: `${keyboardHeight + 12}px`,
+                    left: "12px",
+                    right: "12px",
+                    width: "calc(100vw - 24px)",
+                    height: `${activeHeight}px`,
+                    maxHeight: `${activeHeight}px`,
+                    zIndex: 100,
+                });
             } else {
-                setViewportHeight(null);
+                setMobileStyle({});
             }
         };
 
-        window.visualViewport.addEventListener("resize", handleViewportResize);
-        window.visualViewport.addEventListener("scroll", handleViewportResize);
-        handleViewportResize();
+        const vv = window.visualViewport;
+        vv?.addEventListener("resize", updatePosition);
+        vv?.addEventListener("scroll", updatePosition);
+        window.addEventListener("resize", updatePosition);
+        updatePosition();
 
         return () => {
-            window.visualViewport?.removeEventListener("resize", handleViewportResize);
-            window.visualViewport?.removeEventListener("scroll", handleViewportResize);
+            vv?.removeEventListener("resize", updatePosition);
+            vv?.removeEventListener("scroll", updatePosition);
+            window.removeEventListener("resize", updatePosition);
         };
     }, [isOpen]);
 
     const handleInputFocus = () => {
         setTimeout(() => {
-            inputRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
             scrollToBottom();
-        }, 300);
+        }, 150);
     };
 
     const handleFormSubmit = async (e: React.FormEvent) => {
@@ -95,7 +111,6 @@ export function ChatWidget() {
             try {
                 data = JSON.parse(rawText);
             } catch {
-                // Non-JSON server error response (e.g. 500 HTML or raw string)
                 throw new Error(rawText || "Server returned non-JSON response");
             }
 
@@ -133,8 +148,8 @@ export function ChatWidget() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        style={viewportHeight ? { height: `${viewportHeight - 24}px` } : undefined}
-                        className="fixed bottom-3 right-3 left-3 sm:left-auto sm:right-0 sm:bottom-0 sm:relative w-[calc(100vw-1.5rem)] sm:w-[380px] md:w-[400px] h-[calc(100dvh-3rem)] max-h-[520px] rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden transition-all duration-200"
+                        style={mobileStyle}
+                        className="sm:w-[380px] md:w-[400px] sm:h-[500px] rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden overscroll-contain transition-[bottom,height] duration-150 ease-out"
                     >
                         {/* Header */}
                         <div className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between shrink-0">
@@ -166,7 +181,17 @@ export function ChatWidget() {
                         </div>
 
                         {/* Messages Area */}
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4 font-inter">
+                        <div
+                            onWheel={(e) => {
+                                const el = e.currentTarget;
+                                const isAtTop = el.scrollTop === 0 && e.deltaY < 0;
+                                const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) < 2 && e.deltaY > 0;
+                                if (isAtTop || isAtBottom) {
+                                    e.stopPropagation();
+                                }
+                            }}
+                            className="flex-1 overflow-y-auto overscroll-y-contain p-4 space-y-4 font-inter"
+                        >
                             {messages.map((msg) => (
                                 <div
                                     key={msg.id}
