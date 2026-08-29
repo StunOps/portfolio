@@ -5,10 +5,10 @@ import { Canvas } from "@react-three/fiber"
 import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 import { Center, OrbitControls, useGLTF, Resize } from "@react-three/drei"
-import { Loader, Images, Maximize2, ChevronDown, ChevronUp } from "lucide-react"
-import { ProjectModal } from "@/components/ui/ProjectModal"
+import { Loader, Images, ChevronDown, ChevronUp, ArrowRight, Box } from "lucide-react"
+import { ThreeDModal, ThreeDProject } from "@/components/ui/ThreeDModal"
 
-// Define the structure for the modal
+// Define the structure for the project data
 interface ProjectData {
     title: string
     subtitle: string
@@ -245,39 +245,50 @@ function Model({ path }: { path: string }) {
     const { scene } = useGLTF(path)
     return (
         <Center>
-            <Resize scale={4}>
+            <Resize scale={3.2}>
                 <primitive object={scene} />
             </Resize>
         </Center>
     )
 }
 
-function LazyModel({ project, isReady }: { project: ProjectData, isReady: boolean }) {
+function LazyModel({ project, isReady, isPaused }: { project: ProjectData, isReady: boolean, isPaused: boolean }) {
     const containerRef = useRef<HTMLDivElement>(null)
     const isInView = useInView(containerRef, { once: true, amount: 0.1 })
 
+    if (isPaused) {
+        return (
+            <div ref={containerRef} className="w-full h-full bg-[#1a1a1a] flex items-center justify-center text-white">
+                <div className="flex flex-col items-center gap-2 p-2 text-center">
+                    <Box className="w-8 h-8 text-primary/40" />
+                    <p className="text-[11px] text-muted-foreground font-medium">3D Model Active in Modal</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
-        <div ref={containerRef} className="mx-auto w-[92%] md:w-full h-[400px] md:h-[600px] bg-black/20 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 overflow-hidden relative group">
+        <div ref={containerRef} className="w-full h-full bg-[#1a1a1a] relative group">
             {!isReady || !isInView ? (
                 <div className="absolute inset-0 flex items-center justify-center text-white">
-                    <div className="flex flex-col items-center gap-3">
-                        <Loader className="w-10 h-10 animate-spin text-primary opacity-20" />
-                        <p className="text-sm text-muted-foreground font-medium opacity-50">
-                            {!isInView ? "Scroll to View 3D" : "Initializing 3D Engine..."}
+                    <div className="flex flex-col items-center gap-2 sm:gap-3 p-2 text-center">
+                        <Loader className="w-6 h-6 sm:w-8 sm:h-8 animate-spin text-primary opacity-20" />
+                        <p className="text-[11px] sm:text-xs text-muted-foreground font-medium opacity-50">
+                            {!isInView ? "Scroll to View 3D" : "Initializing 3D..."}
                         </p>
                     </div>
                 </div>
             ) : (
-                <ModelErrorBoundary>
+                <ModelErrorBoundary key={project.id}>
                     <Suspense fallback={
                         <div className="absolute inset-0 flex items-center justify-center text-white">
-                            <div className="flex flex-col items-center gap-3">
-                                <Loader className="w-10 h-10 animate-spin text-primary" />
-                                <p className="text-sm text-muted-foreground font-medium">Loading Model...</p>
+                            <div className="flex flex-col items-center gap-2 sm:gap-3 p-2 text-center">
+                                <Loader className="w-6 h-6 sm:w-8 sm:h-8 animate-spin text-primary" />
+                                <p className="text-[11px] sm:text-xs text-muted-foreground font-medium">Loading Model...</p>
                             </div>
                         </div>
                     }>
-                        <Canvas shadows dpr={[1, 1.5]} camera={{ fov: 45, position: [4, 4, 4] }}>
+                        <Canvas shadows dpr={[1, 1.5]} camera={{ fov: 45, position: [4, 3, 4] }}>
                             <color attach="background" args={['#1a1a1a']} />
                             <ambientLight intensity={0.5} />
                             <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
@@ -288,23 +299,6 @@ function LazyModel({ project, isReady }: { project: ProjectData, isReady: boolea
                     </Suspense>
                 </ModelErrorBoundary>
             )}
-
-            {/* Overlay Badges */}
-            <div className="absolute top-6 right-6 flex flex-col gap-2 pointer-events-none">
-                <div className="px-4 py-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-xs text-white/70 font-mono text-center">
-                    .GLB
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-xl border border-white/10" title="Designed in Fusion 360">
-                    <Image
-                        src="/images/Projects/3D%20Design/Agri-Scan/Fusion.png"
-                        alt="Fusion 360"
-                        width={24}
-                        height={24}
-                        className="object-contain opacity-90"
-                    />
-                    <span className="text-xs text-white/70 font-mono">Fusion 360</span>
-                </div>
-            </div>
         </div>
     )
 }
@@ -312,7 +306,8 @@ function LazyModel({ project, isReady }: { project: ProjectData, isReady: boolea
 export function ThreeDDesigner() {
     const [isReady, setIsReady] = useState(false)
     const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
-    const [visibleCount, setVisibleCount] = useState(3)
+    const [visibleCount, setVisibleCount] = useState(6)
+    const [isDesktop, setIsDesktop] = useState(false)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -321,67 +316,104 @@ export function ThreeDDesigner() {
         return () => clearTimeout(timer)
     }, [])
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 1024)
+        }
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    const step = isDesktop ? 3 : 2
     const visibleProjects = threeDProjects.slice(0, visibleCount)
     const hiddenCount = threeDProjects.length - visibleCount
 
     return (
         <>
-            <div className="w-full space-y-20 mt-1 pb-32">
-                <div className="text-center space-y-4">
-                    <div className="flex items-center justify-center gap-2 text-primary font-medium animate-pulse">
-                        <span className="text-sm">Drag to rotate, scroll to zoom</span>
-                    </div>
-                </div>
+            <div className="w-full space-y-12 md:space-y-20 mt-1 pb-32">
 
-                <div className="flex flex-col gap-24">
-                    {visibleProjects.map((project, index) => (
-                        <div key={project.id} className="flex flex-col gap-6">
-                            {/* Title Row */}
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 px-4">
-                                <div>
-                                    <h3 className="text-3xl font-bold text-white max-w-lg">{project.title}</h3>
-                                    <p className="text-primary text-sm font-medium uppercase tracking-widest mt-1">
-                                        {String(index + 1).padStart(2, '0')} — {project.category}
-                                    </p>
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+                    {visibleProjects.map((project, index) => {
+                        const projectNumber = String(index + 1).padStart(2, '0')
+
+                        return (
+                            <motion.div
+                                key={project.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                onClick={() => setSelectedProject(project)}
+                                className="group relative flex flex-col gap-3 sm:gap-5 p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-sm hover:border-primary/30 transition-colors duration-300 h-full cursor-pointer"
+                            >
+                                {/* Header Section (Matching Dev / Automation Card) */}
+                                <div className="flex justify-between items-start gap-2 sm:gap-4">
+                                    <div className="text-2xl sm:text-4xl md:text-5xl font-bold font-mono text-white/90 flex-shrink-0">
+                                        {projectNumber}
+                                    </div>
+                                    <div
+                                        className="flex flex-col items-end text-right min-w-0 flex-1 overflow-hidden"
+                                        style={{ containerType: "inline-size" }}
+                                    >
+                                        <h3 className="font-bold leading-tight whitespace-nowrap text-[clamp(0.75rem,7cqw,1.4rem)] text-white w-full truncate">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-primary/90 text-[10px] sm:text-xs font-semibold whitespace-nowrap truncate">{project.subtitle}</p>
+                                        
+                                        {/* Tools & Format */}
+                                        <div className="flex items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-2">
+                                            <span className="px-1.5 py-0.5 bg-white/10 border border-white/10 rounded text-[9px] sm:text-[10px] font-mono text-white/70">
+                                                .GLB
+                                            </span>
+                                            {project.tools.map((tool) => (
+                                                <div key={tool.name} className="relative w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110" title={tool.name}>
+                                                    <Image
+                                                        src={tool.icon}
+                                                        alt={tool.name}
+                                                        fill
+                                                        className="object-contain"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
-                                <p className="text-muted-foreground text-sm md:max-w-xs md:text-right">
-                                    {project.description}
-                                </p>
-                            </div>
 
-                            <LazyModel project={project} isReady={isReady} />
+                                {/* Preview Box (Non-draggable with Explore hover button) */}
+                                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl sm:rounded-2xl bg-black/20 mt-auto">
+                                    <div className="absolute inset-0 pointer-events-none">
+                                        <LazyModel project={project} isReady={isReady} isPaused={!!selectedProject} />
+                                    </div>
 
-                            {/* Gallery Button */}
-                            {project.gallery && project.gallery.length > 0 && project.gallery[0].images.length > 0 && (
-                                <button
-                                    onClick={() => setSelectedProject(project)}
-                                    className="w-fit mx-auto px-8 py-3 bg-primary text-white font-bold text-lg rounded-full hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2 group"
-                                >
-                                    <Images className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                    <span>View Render Gallery</span>
-                                </button>
-                            )}
-
-                        </div>
-                    ))}
+                                    {/* Hover Overlay with Explore Button */}
+                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-2 sm:p-4 text-center z-10">
+                                        <button className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 shadow-xl bg-primary text-white hover:bg-primary/90">
+                                            <span>Explore</span>
+                                            <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white shrink-0" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )
+                    })}
                 </div>
 
                 {/* Show More / Show Less */}
                 {hiddenCount > 0 && (
                     <div className="flex justify-center pt-4">
                         <button
-                            onClick={() => setVisibleCount(threeDProjects.length)}
+                            onClick={() => setVisibleCount((prev) => prev + step)}
                             className="group flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
                         >
-                            <span className="text-sm font-medium">Show More ({hiddenCount} more)</span>
+                            <span className="text-sm font-medium">Show {Math.min(hiddenCount, step)} More ({hiddenCount} remaining)</span>
                             <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                         </button>
                     </div>
                 )}
-                {visibleCount > 3 && (
+                {visibleCount > 6 && (
                     <div className="flex justify-center pt-4">
                         <button
-                            onClick={() => setVisibleCount(3)}
+                            onClick={() => setVisibleCount(6)}
                             className="group flex items-center gap-2 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
                         >
                             <span className="text-sm font-medium">Show Less</span>
@@ -391,12 +423,15 @@ export function ThreeDDesigner() {
                 )}
             </div>
 
-            {/* Gallery Modal */}
+            {/* 3D Detail Modal */}
             {selectedProject && (
-                <ProjectModal
+                <ThreeDModal
                     isOpen={!!selectedProject}
                     onClose={() => setSelectedProject(null)}
-                    project={selectedProject}
+                    project={{
+                        ...selectedProject,
+                        number: String(threeDProjects.findIndex(p => p.id === selectedProject.id) + 1).padStart(2, '0')
+                    }}
                 />
             )}
         </>

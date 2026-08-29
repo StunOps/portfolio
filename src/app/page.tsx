@@ -27,8 +27,10 @@ export default function Home() {
         const element = document.getElementById(targetId)
 
         if (element) {
+            const navbarOffset = 70
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY
             window.scrollTo({
-                top: element.offsetTop - 50,
+                top: elementPosition - navbarOffset,
                 behavior: "smooth"
             })
         }

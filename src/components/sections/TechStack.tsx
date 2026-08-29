@@ -20,6 +20,12 @@ const tools: Tool[] = [
     { name: "Canva", description: "Content Creation", icon: "/images/About/Canva.png", category: "Design" },
     { name: "Lightroom", description: "Photo Enhancement", icon: "/images/About/Lightroom.png", category: "Design" },
 
+    // Programming & Databases
+    { name: "Java", description: "Backend Programming", icon: "/images/About/Java.png", category: "Development" },
+    { name: "Python", description: "Data & Automation", icon: "/images/About/Pyhton.png", category: "Development" },
+    { name: "SQL", description: "Database Querying", icon: "/images/About/SQL.png", category: "Development" },
+    { name: "XAMPP", description: "Local Server Stack", icon: "/images/About/Xampp.png", category: "Development" },
+
     // AI & Automation Tools
     { name: "n8n", description: "AI Workflow", icon: "/images/About/n8n.png", category: "Development" },
     { name: "Claude AI", description: "LLM Assistant", icon: "/images/About/Claude.png", category: "Engineering" },
@@ -61,11 +67,7 @@ export function TechStack() {
     // Auto-scroll loop
     useAnimationFrame((t, delta) => {
         if (!isDragging) {
-            // Move left by decrementing
-            // Adjust speed here (0.01 is slower, 0.05 is faster)
             let newX = x.get() - 0.02 * (delta / 16);
-
-            // Loop logic
             if (newX <= -33.333) {
                 newX = 0;
             }
@@ -76,17 +78,10 @@ export function TechStack() {
     // Manual Drag Handler
     const handlePan = (_: any, info: PanInfo) => {
         if (containerRef.current) {
-            // Get total scrollable width
             const width = containerRef.current.scrollWidth;
-
-            // Convert pixel delta to percentage delta
-            // Note: width is total of 3 sets. 
-            // We want percentage of TOTAL width.
             const deltaPercent = (info.delta.x / width) * 100;
-
             let newX = x.get() + deltaPercent;
 
-            // Wrap logic during drag to prevent white space
             if (newX > 0) {
                 newX = -33.333;
             } else if (newX <= -33.333) {
@@ -98,10 +93,9 @@ export function TechStack() {
     };
 
     return (
-
-        <section className="relative pt-20 pb-96">
+        <section className="relative pt-12 sm:pt-16 pb-16 sm:pb-24 bg-transparent">
             {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-[350px] bg-primary/5 rounded-full blur-[140px] -z-10 pointer-events-none" />
 
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
@@ -133,11 +127,11 @@ export function TechStack() {
                     </div>
                 </Container>
 
-                {/* Marquee Container - Full Width */}
-                <div className="relative w-full mt-12 overflow-hidden">
-                    {/* Gradient Masks */}
-                    <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-                    <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                {/* Marquee Container - Transparent Full Width */}
+                <div className="relative w-full mt-12 overflow-hidden bg-transparent">
+                    {/* Gradient Side Masks */}
+                    <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none opacity-40 sm:opacity-100" />
+                    <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none opacity-40 sm:opacity-100" />
 
                     <motion.div
                         ref={containerRef}
@@ -145,12 +139,12 @@ export function TechStack() {
                         onPan={handlePan}
                         onPanStart={() => setIsDragging(true)}
                         onPanEnd={() => setIsDragging(false)}
-                        className="flex gap-6 w-max cursor-grab active:cursor-grabbing pl-20 py-4"
+                        className="flex gap-4 sm:gap-6 w-max cursor-grab active:cursor-grabbing pl-4 sm:pl-20 py-4 bg-transparent"
                     >
                         {marqueeTools.map((tool, index) => (
                             <div
                                 key={`${tool.name}-${index}`}
-                                className="group relative p-4 w-[200px] rounded-2xl glass-panel border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.15)] flex flex-col items-center justify-center gap-4 text-center h-[160px] shrink-0 select-none pointer-events-auto"
+                                className="group relative p-4 w-[160px] sm:w-[200px] rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.15)] flex flex-col items-center justify-center gap-3 sm:gap-4 text-center h-[140px] sm:h-[160px] shrink-0 select-none pointer-events-auto backdrop-blur-sm"
                             >
                                 <div className="relative w-12 h-12 md:w-14 md:h-14 transition-transform duration-300 group-hover:scale-110">
                                     <Image

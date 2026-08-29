@@ -48,7 +48,7 @@ export function About() {
 
         <section
             id="about"
-            className="relative py-0 md:py-0.5 overflow-hidden"
+            className="relative pt-4 md:pt-6 pb-16 md:pb-24"
         >
 
             <Container>

@@ -738,9 +738,9 @@ export function Projects() {
     // ... rest of the component
     return (
 
-        <section id="projects" className="relative pt-[1px] md:pt-[50px] pb-96">
+        <section id="projects" className="relative pt-4 md:pt-6 pb-16 md:pb-24">
             {/* Background Glow */}
-            <div className="absolute -top-40 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+            <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] -z-10 pointer-events-none" />
 
             <div>
                 <Container>
@@ -823,7 +823,7 @@ export function Projects() {
                                 transition={{ duration: 0.3 }}
                             >
                                 {activeCategory === "UI/UX Designer" ? (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                                         {uiUxProjects.map((project) => (
                                             <div key={project.id} onClick={() => handleProjectClick(project)} className="cursor-pointer">
                                                 <ProjectCard {...project} />

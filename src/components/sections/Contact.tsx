@@ -40,7 +40,7 @@ export function Contact() {
     }
 
     return (
-        <section id="contact" className="relative pt-[1px] pb-32 overflow-hidden">
+        <section id="contact" className="relative pt-4 md:pt-6 pb-12 md:pb-16">
             {/* Background Decoration */}
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none translate-y-1/2" />
 

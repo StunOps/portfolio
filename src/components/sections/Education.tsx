@@ -56,7 +56,7 @@ const educationData: EducationItem[] = [
 
 export function Education() {
     return (
-        <section id="education" className="relative pt-[1px] pb-96 overflow-hidden">
+        <section id="education" className="relative pt-4 md:pt-6 pb-16 md:pb-24">
             {/* Background Decoration */}
             <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none -translate-y-1/2" />
 

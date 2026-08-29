@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { X, Maximize2, CheckCircle2, Bot, Database, UserCheck, Mail, Send, Cpu, Layers, Search, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react"
+import { X, Maximize2, CheckCircle2, Database, Cpu, Layers, ChevronLeft, ChevronRight, ChevronDown, Layout, Calendar, CreditCard, ShieldCheck, User, Sparkles, Terminal, Code2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export interface ToolItem {
@@ -11,52 +11,73 @@ export interface ToolItem {
     icon: string
 }
 
-export interface AutomationProject {
+export interface ArchitectureModule {
+    name: string
+    description: string
+}
+
+export interface GallerySection {
+    title: string
+    images: { name: string; path: string }[]
+}
+
+export interface GalleryCategory {
+    name: string
+    sections?: GallerySection[]
+    images?: { name: string; path: string }[]
+}
+
+export interface DeveloperProject {
     id: string
     number: string
     title: string
     subtitle: string
+    role: string
     description: string
     image: string
-    workflowImage: string
     tools: ToolItem[]
-    contentImages: { name: string; path: string }[]
-    workflowSteps: string[]
+    architecture: ArchitectureModule[]
     overviewText: string[]
+    gallery: GalleryCategory[]
 }
 
-interface AutomationModalProps {
+interface DeveloperModalProps {
     isOpen: boolean
     onClose: () => void
-    project: AutomationProject
+    project: DeveloperProject
 }
 
-export function AutomationModal({ isOpen, onClose, project }: AutomationModalProps) {
+export function DeveloperModal({ isOpen, onClose, project }: DeveloperModalProps) {
     const [selectedImage, setSelectedImage] = useState<string | null>(null)
-    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null) // -1 for workflow image, >=0 for contentImages
+    const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0)
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null) // -1 for main overview image, >=0 for flattened gallery images
     const [isMobileGalleryOpen, setIsMobileGalleryOpen] = useState<boolean>(false)
 
-    // Navigation handlers for Lightbox
-    const handlePrevImage = useCallback((e?: React.MouseEvent) => {
-        if (e) e.stopPropagation()
-        if (lightboxIndex === null) return
-        if (lightboxIndex === -1) return // Workflow image view has no prev/next
+    // Flatten all gallery images for easy lightbox pagination
+    const allGalleryImages = useMemo(() => {
+        if (!project || !project.gallery) return []
+        const list: { name: string; path: string; categoryName: string }[] = []
+        project.gallery.forEach((cat) => {
+            if (cat.sections && cat.sections.length > 0) {
+                cat.sections.forEach((sec) => {
+                    sec.images.forEach((img) => {
+                        list.push({ ...img, categoryName: `${cat.name} - ${sec.title}` })
+                    })
+                })
+            } else if (cat.images && cat.images.length > 0) {
+                cat.images.forEach((img) => {
+                    list.push({ ...img, categoryName: cat.name })
+                })
+            }
+        })
+        return list
+    }, [project])
 
-        setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : project.contentImages.length - 1))
-    }, [lightboxIndex, project.contentImages.length])
-
-    const handleNextImage = useCallback((e?: React.MouseEvent) => {
-        if (e) e.stopPropagation()
-        if (lightboxIndex === null) return
-        if (lightboxIndex === -1) return // Workflow image view has no prev/next
-
-        setLightboxIndex((prev) => (prev !== null && prev < project.contentImages.length - 1 ? prev + 1 : 0))
-    }, [lightboxIndex, project.contentImages.length])
-
-    // Reset lightbox when modal opens/closes
+    // Set initial image when modal opens or project changes
     useEffect(() => {
         if (isOpen && project) {
             setSelectedImage(project.image)
+            setActiveCategoryIndex(0)
             setLightboxIndex(null)
             setIsMobileGalleryOpen(false)
         } else {
@@ -76,7 +97,28 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
         setLightboxIndex(null)
     }, [])
 
-    // Lock body scroll and register keyboard navigation
+    // Lightbox navigation
+    const handlePrevImage = useCallback((e?: React.MouseEvent) => {
+        if (e) e.stopPropagation()
+        if (lightboxIndex === null) return
+        if (lightboxIndex === -1) {
+            setLightboxIndex(allGalleryImages.length - 1)
+            return
+        }
+        setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : -1))
+    }, [lightboxIndex, allGalleryImages.length])
+
+    const handleNextImage = useCallback((e?: React.MouseEvent) => {
+        if (e) e.stopPropagation()
+        if (lightboxIndex === null) return
+        if (lightboxIndex === -1) {
+            setLightboxIndex(0)
+            return
+        }
+        setLightboxIndex((prev) => (prev !== null && prev < allGalleryImages.length - 1 ? prev + 1 : -1))
+    }, [lightboxIndex, allGalleryImages.length])
+
+    // Lock body scroll and keyboard listeners
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden"
@@ -104,59 +146,114 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
 
     if (!isOpen || !project) return null
 
-    // Icons mapping for the 2D workflow nodes
-    const getWorkflowIcon = (index: number) => {
-        switch (index) {
-            case 0: return <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 shrink-0" />
-            case 1: return <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
-            case 2: return <Search className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 shrink-0" />
-            case 3: return <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 shrink-0" />
-            case 4: return <Database className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
-            case 5: return <UserCheck className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 shrink-0" />
-            case 6: return <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
-            case 7: return <Send className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 shrink-0" />
-            case 8: return <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 shrink-0" />
-            default: return <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-primary shrink-0" />
+    // Helper icon selector for architecture cards
+    const getModuleIcon = (name: string, index: number) => {
+        const lowerName = name.toLowerCase()
+        if (lowerName.includes("cashier") || lowerName.includes("bill") || lowerName.includes("budget") || lowerName.includes("financial")) {
+            return <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 shrink-0" />
         }
+        if (lowerName.includes("chef") || lowerName.includes("order") || lowerName.includes("event")) {
+            return <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
+        }
+        if (lowerName.includes("admin") || lowerName.includes("officer") || lowerName.includes("security")) {
+            return <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 shrink-0" />
+        }
+        if (lowerName.includes("calendar") || lowerName.includes("planner")) {
+            return <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 shrink-0" />
+        }
+        if (lowerName.includes("user") || lowerName.includes("student") || lowerName.includes("clerk")) {
+            return <User className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 shrink-0" />
+        }
+        if (lowerName.includes("job") || lowerName.includes("automation") || lowerName.includes("lead")) {
+            return <Terminal className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400 shrink-0" />
+        }
+        return <Layout className="w-4 h-4 sm:w-5 sm:h-5 text-primary shrink-0" />
     }
 
-    const currentLightboxSrc = lightboxIndex === -1
-        ? project.workflowImage
-        : lightboxIndex !== null && lightboxIndex >= 0 && lightboxIndex < project.contentImages.length
-            ? project.contentImages[lightboxIndex].path
+    const currentLightboxItem = lightboxIndex === -1
+        ? { path: project.image, title: `${project.title} Overview` }
+        : lightboxIndex !== null && lightboxIndex >= 0 && lightboxIndex < allGalleryImages.length
+            ? { path: allGalleryImages[lightboxIndex].path, title: `${allGalleryImages[lightboxIndex].categoryName} - ${allGalleryImages[lightboxIndex].name}` }
             : null
 
     const renderGalleryContent = () => (
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
-            {project.contentImages.map((img, idx) => (
-                <div
-                    key={img.path}
-                    onClick={() => {
-                        setSelectedImage(img.path)
-                        setLightboxIndex(idx)
-                    }}
-                    className={cn(
-                        "group relative aspect-video rounded-xl overflow-hidden border cursor-pointer transition-all duration-300 bg-white/5",
-                        selectedImage === img.path
-                            ? "border-primary ring-2 ring-primary/40"
-                            : "border-white/10 hover:border-primary/50 hover:scale-[1.02]"
-                    )}
-                >
-                    <Image
-                        src={img.path}
-                        alt={img.name}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 p-1">
-                        <span className="text-[10px] font-semibold text-white bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-sm truncate">
-                            {img.name}
-                        </span>
-                        <Maximize2 className="w-3.5 h-3.5 text-white shrink-0" />
-                    </div>
+        <>
+            {/* Category Switcher Tabs */}
+            {project.gallery.length > 1 && (
+                <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-white/5 border border-white/10">
+                    {project.gallery.map((cat, idx) => (
+                        <button
+                            key={cat.name}
+                            onClick={() => setActiveCategoryIndex(idx)}
+                            className={cn(
+                                "px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-all duration-200 flex-1 text-center truncate",
+                                activeCategoryIndex === idx
+                                    ? "bg-primary text-white shadow-md"
+                                    : "text-white/70 hover:text-white hover:bg-white/10"
+                            )}
+                        >
+                            {cat.name}
+                        </button>
+                    ))}
                 </div>
-            ))}
-        </div>
+            )}
+
+            {/* Thumbnails Sections for Active Category */}
+            {(() => {
+                const currentCategory = project.gallery[activeCategoryIndex]
+                if (!currentCategory) return null
+
+                const sectionsToRender = currentCategory.sections || (currentCategory.images ? [{ title: "", images: currentCategory.images }] : [])
+
+                return (
+                    <div className="space-y-4">
+                        {sectionsToRender.map((sec, secIdx) => (
+                            <div key={`sec-${sec.title}-${secIdx}`} className="space-y-2">
+                                {sec.title && (
+                                    <div className="flex items-center gap-2 pt-1">
+                                        <span className="text-xs font-bold text-white/80 uppercase tracking-wider">{sec.title}</span>
+                                        <div className="h-[1px] flex-1 bg-white/10" />
+                                    </div>
+                                )}
+                                <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                                    {sec.images.map((img) => {
+                                        const globalIdx = allGalleryImages.findIndex((item) => item.path === img.path)
+                                        return (
+                                            <div
+                                                key={img.path}
+                                                onClick={() => {
+                                                    setSelectedImage(img.path)
+                                                    setLightboxIndex(globalIdx !== -1 ? globalIdx : 0)
+                                                }}
+                                                className={cn(
+                                                    "group relative aspect-video rounded-xl overflow-hidden border cursor-pointer transition-all duration-300 bg-white/5",
+                                                    selectedImage === img.path
+                                                        ? "border-primary ring-2 ring-primary/40"
+                                                        : "border-white/10 hover:border-primary/50 hover:scale-[1.02]"
+                                                )}
+                                            >
+                                                <Image
+                                                    src={img.path}
+                                                    alt={img.name}
+                                                    fill
+                                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                                />
+                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 p-1">
+                                                    <span className="text-[10px] font-semibold text-white bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-sm truncate">
+                                                        View Screen
+                                                    </span>
+                                                    <Maximize2 className="w-3.5 h-3.5 text-white shrink-0" />
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
+            })()}
+        </>
     )
 
     return (
@@ -165,7 +262,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        key="automation-modal-wrapper"
+                        key="developer-modal-wrapper"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -173,7 +270,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                     >
                         {/* Backdrop */}
                         <motion.div
-                            key="automation-modal-backdrop"
+                            key="developer-modal-backdrop"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -183,7 +280,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
 
                         {/* Main Modal Window */}
                         <motion.div
-                            key="automation-modal-window"
+                            key="developer-modal-window"
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -194,7 +291,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                             <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 bg-black/40 backdrop-blur-xl shrink-0">
                                 <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                                     <div className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider shrink-0">
-                                        AI Automation
+                                        {project.role}
                                     </div>
                                     <h2 className="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight truncate">{project.title}</h2>
                                 </div>
@@ -222,7 +319,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                                             <div className="flex items-center gap-2">
                                                 <span className="text-xs font-bold text-white uppercase tracking-wider">Content Panels</span>
                                                 <span className="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-mono font-bold border border-primary/30">
-                                                    {project.contentImages.length} Screens
+                                                    {allGalleryImages.length} Screens
                                                 </span>
                                             </div>
                                             <p className="text-[11px] text-muted-foreground truncate">
@@ -254,14 +351,14 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                             {/* Modal Body Container: Sidebar + Content */}
                             <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
 
-                                {/* Desktop Sidebar - Content Image Panels */}
+                                {/* Desktop Sidebar - Gallery Panels */}
                                 <div className="hidden md:flex w-80 lg:w-96 bg-black/50 border-r border-white/10 p-4 md:p-6 flex-col gap-4 overflow-y-auto custom-scrollbar shrink-0">
                                     <div>
                                         <h3 className="text-xs sm:text-sm font-bold text-white/90 uppercase tracking-wider flex items-center gap-2 mb-0.5 sm:mb-1">
                                             <Layers className="w-4 h-4 text-primary" />
-                                            Content Panels ({project.contentImages.length})
+                                            Content Panels ({allGalleryImages.length})
                                         </h3>
-                                        <p className="text-[11px] sm:text-xs text-muted-foreground">Click any panel screenshot to expand full preview</p>
+                                        <p className="text-[11px] sm:text-xs text-muted-foreground">Click any screenshot to view full resolution</p>
                                     </div>
                                     {renderGalleryContent()}
                                 </div>
@@ -280,37 +377,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                                         </p>
                                     </div>
 
-                                    {/* Section 2: Interactive n8n Workflow Process (Clickable Thumbnail) */}
-                                    <div className="space-y-2.5 sm:space-y-3">
-                                        <div className="flex items-center justify-between">
-                                            <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                                                <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                                                n8n Automation Workflow Diagram
-                                            </h3>
-                                            <span className="text-[11px] sm:text-xs text-muted-foreground">(Click to enlarge workflow)</span>
-                                        </div>
-
-                                        <div
-                                            onClick={() => setLightboxIndex(-1)}
-                                            className="group relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl sm:rounded-2xl border border-white/10 bg-black/60 overflow-hidden cursor-pointer shadow-xl transition-all duration-300 hover:border-primary/50"
-                                        >
-                                            <Image
-                                                src={project.workflowImage}
-                                                alt={`${project.title} Workflow`}
-                                                fill
-                                                className="object-contain p-1.5 sm:p-2 transition-transform duration-500 group-hover:scale-[1.02]"
-                                                quality={100}
-                                            />
-                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                <button className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-primary text-white text-xs sm:text-sm font-medium shadow-lg backdrop-blur-sm transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                                                    <Maximize2 className="w-4 h-4" />
-                                                    Enlarge Full Workflow Diagram
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Section 3: Built With (Icons & Names) */}
+                                    {/* Section 2: Built With (Icons & Names) */}
                                     <div className="space-y-3 sm:space-y-4">
                                         <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                                             <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
@@ -336,30 +403,33 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                                         </div>
                                     </div>
 
-                                    {/* Section 4: Workflow Execution Breakdown */}
-                                    {project.workflowSteps && project.workflowSteps.length > 0 && (
+                                    {/* Section 3: System Architecture & Key Modules */}
+                                    {project.architecture && project.architecture.length > 0 && (
                                         <div className="space-y-3 sm:space-y-4">
                                             <div className="space-y-1">
                                                 <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                                                     <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                                                    Automation Logic & Execution Pipeline
+                                                    System Architecture & Core Modules
                                                 </h3>
-                                                <p className="text-[11px] sm:text-xs text-muted-foreground">Step-by-step technical breakdown of the n8n automation pipeline</p>
+                                                <p className="text-[11px] sm:text-xs text-muted-foreground">Module breakdown and primary feature sections</p>
                                             </div>
 
                                             <div className="p-3.5 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/10">
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                                                    {project.workflowSteps.map((step, index) => (
+                                                    {project.architecture.map((mod, index) => (
                                                         <div
-                                                            key={`step-${index}`}
-                                                            className="flex items-start gap-2.5 p-3.5 sm:p-4 rounded-xl bg-black/50 border border-white/10 hover:border-primary/60 transition-all duration-300 shadow-md group"
+                                                            key={`arch-${mod.name}-${index}`}
+                                                            className="flex flex-col gap-2 p-3.5 sm:p-4 rounded-xl bg-black/50 border border-white/10 hover:border-primary/60 transition-all duration-300 shadow-md group"
                                                         >
-                                                            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary/10 border border-primary/30 font-mono font-bold text-xs text-primary shrink-0 mt-0.5">
-                                                                {index + 1}
+                                                            <div className="flex items-start gap-2.5">
+                                                                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary/10 border border-primary/30 font-mono font-bold text-xs text-primary shrink-0 mt-0.5">
+                                                                    {index + 1}
+                                                                </div>
+                                                                <div className="mt-1 shrink-0">{getModuleIcon(mod.name, index)}</div>
+                                                                <h4 className="text-xs sm:text-sm font-bold text-white leading-snug break-words flex-1 min-w-0">{mod.name}</h4>
                                                             </div>
-                                                            <div className="mt-1 shrink-0">{getWorkflowIcon(index)}</div>
-                                                            <p className="text-xs sm:text-sm text-white/90 font-medium leading-snug pt-0.5">
-                                                                {step}
+                                                            <p className="text-[11px] sm:text-xs text-muted-foreground leading-relaxed pt-1">
+                                                                {mod.description}
                                                             </p>
                                                         </div>
                                                     ))}
@@ -368,16 +438,16 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                                         </div>
                                     )}
 
-                                    {/* Section 5: Overview & Technical Context */}
+                                    {/* Section 4: Overview & Technical Context */}
                                     {project.overviewText && project.overviewText.length > 0 && (
                                         <div className="space-y-3 sm:space-y-4 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/[0.02] border border-white/10">
                                             <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                                                 <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                                                Overview & Database Integration
+                                                Overview & Development Context
                                             </h3>
                                             <div className="space-y-2.5 sm:space-y-3 text-muted-foreground text-xs sm:text-sm md:text-base leading-relaxed">
                                                 {project.overviewText.map((paragraph, i) => (
-                                                    <p key={`overview-para-${i}`}>{paragraph}</p>
+                                                    <p key={`overview-p-${i}`}>{paragraph}</p>
                                                 ))}
                                             </div>
                                         </div>
@@ -392,9 +462,9 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
 
             {/* Lightbox / Fullscreen Image Viewer Modal with Prev/Next Navigation */}
             <AnimatePresence>
-                {lightboxIndex !== null && currentLightboxSrc && (
+                {lightboxIndex !== null && currentLightboxItem && (
                     <motion.div
-                        key="automation-lightbox-wrapper"
+                        key="developer-lightbox-wrapper"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -404,9 +474,7 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                         {/* Header Info & Close Button */}
                         <div className="absolute top-4 left-4 right-4 sm:top-6 sm:left-8 sm:right-8 flex items-center justify-between z-20 pointer-events-none">
                             <div className="px-3 py-1.5 rounded-full bg-black/70 border border-white/15 backdrop-blur-md text-white text-xs sm:text-sm font-semibold pointer-events-auto">
-                                {lightboxIndex === -1
-                                    ? "n8n Workflow Screenshot"
-                                    : `Content Screen ${lightboxIndex + 1} of ${project.contentImages.length}`}
+                                {currentLightboxItem.title}
                             </div>
                             <button
                                 onClick={handleCloseLightbox}
@@ -416,8 +484,8 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                             </button>
                         </div>
 
-                        {/* Previous Button (for Content Panels) */}
-                        {lightboxIndex >= 0 && project.contentImages.length > 1 && (
+                        {/* Previous Button */}
+                        {allGalleryImages.length > 0 && (
                             <button
                                 onClick={handlePrevImage}
                                 className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/70 hover:bg-primary border border-white/15 hover:border-primary text-white transition-all shadow-2xl z-20 group"
@@ -427,8 +495,8 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                             </button>
                         )}
 
-                        {/* Next Button (for Content Panels) */}
-                        {lightboxIndex >= 0 && project.contentImages.length > 1 && (
+                        {/* Next Button */}
+                        {allGalleryImages.length > 0 && (
                             <button
                                 onClick={handleNextImage}
                                 className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-black/70 hover:bg-primary border border-white/15 hover:border-primary text-white transition-all shadow-2xl z-20 group"
@@ -444,8 +512,8 @@ export function AutomationModal({ isOpen, onClose, project }: AutomationModalPro
                             onClick={(e) => e.stopPropagation()}
                         >
                             <Image
-                                key={currentLightboxSrc}
-                                src={currentLightboxSrc}
+                                key={currentLightboxItem.path}
+                                src={currentLightboxItem.path}
                                 alt="Expanded View"
                                 fill
                                 className="object-contain"

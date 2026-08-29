@@ -16,13 +16,19 @@ const navItems = [
 export function MobileMenu() {
     const [isOpen, setIsOpen] = useState(false)
 
-    // Scroll Handler
     const handleScroll = (href: string) => {
         setIsOpen(false)
-        const element = document.getElementById(href.substring(1))
+        const targetId = href.substring(1)
+        if (targetId === "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" })
+            return
+        }
+        const element = document.getElementById(targetId)
         if (element) {
+            const navbarOffset = 70
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY
             window.scrollTo({
-                top: element.offsetTop - 50,
+                top: elementPosition - navbarOffset,
                 behavior: "smooth"
             })
         }

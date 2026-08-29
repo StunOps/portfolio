@@ -71,11 +71,19 @@ export function Navbar() {
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault()
         const targetId = href.substring(1)
-        const element = document.getElementById(targetId)
 
+        if (targetId === "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" })
+            setActiveSection("home")
+            return
+        }
+
+        const element = document.getElementById(targetId)
         if (element) {
+            const navbarOffset = 70
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY
             window.scrollTo({
-                top: element.offsetTop - 50, // Reduced offset to align closer to center
+                top: elementPosition - navbarOffset,
                 behavior: "smooth"
             })
             setActiveSection(targetId)
@@ -94,8 +102,10 @@ export function Navbar() {
         // 3. Scroll to Projects section
         const element = document.getElementById("projects")
         if (element) {
+            const navbarOffset = 70
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY
             window.scrollTo({
-                top: element.offsetTop,
+                top: elementPosition - navbarOffset,
                 behavior: "smooth"
             })
         }

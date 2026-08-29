@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import { motion, useMotionValue, useTransform } from "framer-motion"
-import { ArrowRight, Eye, MousePointerClick } from "lucide-react"
+import { motion, useMotionValue, useTransform, animate } from "framer-motion"
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { BrandingModal } from "@/components/ui/BrandingModal"
 import { cn } from "@/lib/utils"
 
@@ -48,7 +48,6 @@ export function LogoBranding() {
     // Motion value for drag position
     const x = useMotionValue(0)
     // Map drag position to progress percentage
-    // Constraint is negative (e.g. -2000). 0 -> 0%, -2000 -> 100%
     const progress = useTransform(x, [0, constraint], ["0%", "100%"])
 
     // Calculate drag constraints on mount/resize
@@ -57,10 +56,6 @@ export function LogoBranding() {
             if (containerRef.current && trackRef.current) {
                 const containerWidth = containerRef.current.offsetWidth
                 const trackWidth = trackRef.current.scrollWidth
-                // We want to drag left until the end fits.
-                // Min x (left) should be -(trackWidth - containerWidth)
-                // Max x (right) should be 0
-                // Add some padding/buffer?
                 setConstraint(containerWidth - trackWidth - 48) // 48px padding buffer
             }
         }
@@ -69,6 +64,22 @@ export function LogoBranding() {
         window.addEventListener('resize', calculateConstraints)
         return () => window.removeEventListener('resize', calculateConstraints)
     }, [])
+
+    const handlePrev = () => {
+        if (!containerRef.current) return
+        const cardWidth = containerRef.current.offsetWidth < 768 ? 360 : 440
+        const currentX = x.get()
+        const targetX = Math.min(0, currentX + cardWidth)
+        animate(x, targetX, { type: "spring", stiffness: 300, damping: 30 })
+    }
+
+    const handleNext = () => {
+        if (!containerRef.current) return
+        const cardWidth = containerRef.current.offsetWidth < 768 ? 360 : 440
+        const currentX = x.get()
+        const targetX = Math.max(constraint, currentX - cardWidth)
+        animate(x, targetX, { type: "spring", stiffness: 300, damping: 30 })
+    }
 
     const handleProjectClick = (project: typeof logoProjects[0]) => {
         setSelectedProject({
@@ -96,11 +107,35 @@ export function LogoBranding() {
                 </div>
             </div>
 
-            {/* Draggable container */}
-            <div
-                ref={containerRef}
-                className="w-full overflow-hidden px-4 md:px-0 cursor-grab active:cursor-grabbing"
-            >
+            {/* Draggable Carousel Container with Side Navigation Arrows */}
+            <div className="relative group/carousel w-full">
+                {/* Left Side Arrow Button */}
+                <button
+                    onClick={handlePrev}
+                    className="hidden md:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/60 hover:bg-primary border border-white/20 hover:border-primary text-white backdrop-blur-md shadow-2xl transition-all duration-300 opacity-80 hover:opacity-100 active:scale-90 cursor-pointer items-center justify-center"
+                    aria-label="Previous logo card"
+                >
+                    <ChevronLeft className="w-6 h-6 -translate-x-0.5" />
+                </button>
+
+                {/* Right Side Arrow Button */}
+                <button
+                    onClick={handleNext}
+                    className="hidden md:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/60 hover:bg-primary border border-white/20 hover:border-primary text-white backdrop-blur-md shadow-2xl transition-all duration-300 opacity-80 hover:opacity-100 active:scale-90 cursor-pointer items-center justify-center"
+                    aria-label="Next logo card"
+                >
+                    <ChevronRight className="w-6 h-6 translate-x-0.5" />
+                </button>
+
+                {/* Side Gradient Blending */}
+                <div className="absolute left-0 top-0 bottom-8 w-12 sm:w-16 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-8 w-12 sm:w-16 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
+
+                {/* Track */}
+                <div
+                    ref={containerRef}
+                    className="w-full overflow-hidden px-4 md:px-0 cursor-grab active:cursor-grabbing"
+                >
                 <motion.div
                     ref={trackRef}
                     drag="x"
@@ -153,6 +188,7 @@ export function LogoBranding() {
                     {/* Spacer for right padding */}
                     <div className="w-4 shrink-0" />
                 </motion.div>
+            </div>
             </div>
 
             {/* Custom Scroll Indicator */}
