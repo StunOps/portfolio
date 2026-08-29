@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronDown } from "lucide-react"
@@ -26,20 +26,32 @@ const navItems = [
 export function Navbar() {
     const [activeSection, setActiveSection] = useState("home")
     const [activeProjectCategory, setActiveProjectCategory] = useState("")
+    const [isVisible, setIsVisible] = useState(true)
+    const lastScrollY = useRef(0)
 
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ["home", "about", "projects", "education", "contact"]
+            const currentScrollY = window.scrollY
+            const prevScrollY = lastScrollY.current
 
-            // Find the section currently in view
-            // We'll consider a section active if its top is within the viewport or reasonably close
+            // Determine Navbar visibility: show when scrolling UP or near top (< 50px), hide when scrolling DOWN
+            if (currentScrollY < 50) {
+                setIsVisible(true)
+            } else if (currentScrollY > prevScrollY && currentScrollY - prevScrollY > 5) {
+                setIsVisible(false)
+            } else if (currentScrollY < prevScrollY && prevScrollY - currentScrollY > 5) {
+                setIsVisible(true)
+            }
+
+            lastScrollY.current = currentScrollY
+
+            const sections = ["home", "about", "projects", "education", "contact"]
             let current = ""
 
             for (const section of sections) {
                 const element = document.getElementById(section)
                 if (element) {
                     const rect = element.getBoundingClientRect()
-                    // Active if top passes quite early (0.7 = 70% down the viewport)
                     if (rect.top <= window.innerHeight * 0.7 && rect.bottom >= 100) {
                         current = section
                     }
@@ -112,7 +124,10 @@ export function Navbar() {
     }
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border/40 transition-all duration-300">
+        <header className={cn(
+            "fixed top-0 inset-x-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border/40 transition-transform duration-300 ease-in-out",
+            isVisible ? "translate-y-0" : "-translate-y-full"
+        )}>
             <Container>
                 <div className="flex h-16 items-center justify-between">
                     <Link

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Container } from "@/components/ui/Container"
 import { cn } from "@/lib/utils"
 // Import ProjectCard and ProjectModal
@@ -717,7 +717,6 @@ export function Projects() {
         setIsModalOpen(true)
     }
 
-    // ... (keep hash effect) ...
     useEffect(() => {
         const handleHashChange = () => {
             const hash = window.location.hash
@@ -735,9 +734,7 @@ export function Projects() {
         return () => window.removeEventListener("hashchange", handleHashChange)
     }, [])
 
-    // ... rest of the component
     return (
-
         <section id="projects" className="relative pt-4 md:pt-6 pb-16 md:pb-24">
             {/* Background Glow */}
             <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] -z-10 pointer-events-none" />
@@ -763,8 +760,9 @@ export function Projects() {
                             </motion.div>
                         </div>
 
-                        <div className="sticky top-20 z-40 py-4 flex justify-center px-2 md:px-4 pointer-events-none">
-                            <div className="pointer-events-auto flex flex-nowrap items-center justify-between w-full md:w-auto md:justify-center gap-1 p-1.5 bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl shadow-black/50 ring-1 ring-white/5 transition-all duration-300">
+                        {/* Category Pills Bar */}
+                        <div className="flex justify-center px-2 md:px-4 w-full">
+                            <div className="flex flex-wrap items-center justify-center gap-1 md:gap-2 p-1.5 bg-white/10 dark:bg-white/10 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-xl shadow-black/20 ring-1 ring-white/10">
                                 {categories.map((category) => (
                                     <button
                                         key={category}
@@ -785,17 +783,12 @@ export function Projects() {
                                             }
                                         }}
                                         className={cn(
-                                            "relative flex-1 md:flex-none px-1 py-2 md:px-6 md:py-2.5 text-[10px] md:text-sm font-medium rounded-xl transition-all duration-200 whitespace-nowrap text-center",
-                                            activeCategory === category ? "text-white shadow-lg shadow-primary/25" : "text-muted-foreground hover:text-white hover:bg-white/5"
+                                            "relative px-3 py-1.5 md:px-5 md:py-2 text-[11px] md:text-sm font-medium rounded-xl transition-all duration-200 text-center",
+                                            activeCategory === category
+                                                ? "text-white bg-primary font-semibold shadow-md shadow-primary/30"
+                                                : "text-zinc-200 hover:text-white hover:bg-white/15"
                                         )}
                                     >
-                                        {activeCategory === category && (
-                                            <motion.div
-                                                layoutId="activeCategory"
-                                                className="absolute inset-0 bg-primary rounded-xl -z-10"
-                                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                            />
-                                        )}
                                         <span className="md:hidden">
                                             {category === "UI/UX Designer" ? "UI/UX" :
                                                 category === "Graphic Designer" ? "Graphics" :
