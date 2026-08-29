@@ -62,7 +62,7 @@ export default function Home() {
                     <div className="absolute -top-20 right-0 w-full max-w-[300px] sm:max-w-[500px] h-[350px] bg-orange-500/35 rounded-full blur-3xl animate-smoke-drift [animation-delay:3s] opacity-70 transform-gpu overflow-hidden" />
                 </div>
 
-                <Container className="flex-grow py-12 md:pt-32 md:pb-24">
+                <Container className="flex-grow pt-24 sm:pt-28 md:pt-32 pb-12 md:pb-24">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr_1fr] gap-8 lg:gap-12 items-center lg:items-start h-full">
 
                         {/* Left Column */}

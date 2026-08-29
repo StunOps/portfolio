@@ -728,8 +728,8 @@ export function Projects() {
             const titleRect = titleRef.current.getBoundingClientRect()
             const sectionRect = sectionRef.current.getBoundingClientRect()
 
-            // Header offset (Navbar height ~64px)
-            const navbarOffset = 70
+            // Header offset (Navbar height ~64px + 20px padding)
+            const navbarOffset = 85
 
             // 1. Triggers sticky when "My Projects" title passes above top navbar
             const pastTitle = titleRect.bottom <= navbarOffset
@@ -763,7 +763,7 @@ export function Projects() {
     }, [])
 
     return (
-        <section ref={sectionRef} id="projects" className="relative pt-4 md:pt-6 pb-16 md:pb-24">
+        <section ref={sectionRef} id="projects" className="relative pt-8 md:pt-16 pb-16 md:pb-24">
             {/* Background Glow */}
             <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] -z-10 pointer-events-none" />
 
@@ -777,7 +777,7 @@ export function Projects() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: false, amount: 0.2 }}
                                 transition={{ duration: 0.6 }}
-                                className="text-center space-y-4"
+                                className="text-center space-y-4 pt-2 sm:pt-0"
                             >
                                 <h2 className="text-4xl md:text-5xl font-bold">
                                     My <span className="text-primary">Projects</span>
@@ -794,7 +794,7 @@ export function Projects() {
                                 className={cn(
                                     "flex justify-center w-full py-1 pointer-events-none transition-none",
                                     isSticky
-                                        ? "fixed top-16 md:top-20 left-1/2 -translate-x-1/2 z-40 max-w-full px-2 sm:px-4"
+                                        ? "fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-40 max-w-full px-2 sm:px-4"
                                         : "relative z-30"
                                 )}
                             >
